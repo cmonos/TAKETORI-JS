@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title lang="ja">「竹取JS」について</title>
+<style type="text/css">
+<!--
+body {
+  background-color: #FFF;
+  margin: 3em 10%;
+}
+dl {
+  border-top: solid 1px #CCC;
+  border-left: solid 1px #CCC;
+  border-right: solid 1px #CCC;
+  _border: solid 1px #CCC;
+}
+dt, dd {
+  margin: 0;
+  padding: 0.7em 1em;
+  border-bottom: solid 1px #CCC;
+}
+dt {
+  background-color: #F3F3F3;
+}
+dl dl dt, dl dl dd {
+  font-size: 0.8em;
+  padding: 0.2em 0.5em;
+}
+pre {
+  display: block;
+  margin: 0.2em 0;
+  padding: 0.5em 1em;
+  background-color: #E3E3E3;
+  border-top: solid 1px #AAA;
+  border-left: solid 1px #AAA;
+  border-right: solid 1px #FFF;
+  border-bottom: solid 1px #FFF;
+  overflow: auto;
+  overflow-x: auto;
+  overflow-y: visible;
+  _width: 90%;
+  _padding: 18px 1em;
+}
+-->
+</style>
+</head>
+<body>
+
+<h1>「竹取JS」について</h1>
+
+<h2>概要</h2>
+
+<p>「竹取JS」は、指定されたブロックを縦書き表示に変換する JavaScript です。InternetExplorer5.5 以降に実装されている「writing-mode: tb-rl;」相当の表示を主要ブラウザで再現します。</p>
+
+<dl>
+	<dt>対応ブラウザ</dt>
+	<dd>InternetExplorer5.5+ / Firefox3.5+ / Safari3.2+ / Chrome3.0+ / Opera10.5+</dd>
+	<dt>縦書き対象言語</dt>
+	<dd>日本語・中国語・韓国語</dd>
+</dl>
+
+<h2>使い方</h2>
+
+<h3>設置</h3>
+
+<p>下記2ファイルを<strong>同じ階層に</strong>アップロードします。</p>
+
+<ul>
+	<li>taketori.js</li>
+	<li>taketori.css</li>
+</ul>
+
+<h3>縦書き指定の概略</h3>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;taketori.js&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+//&lt;![CDATA[
+(new Taketori()).set({設定項目:値,設定項目:値}).element('縦書き対象要素ID').toVertical(画面の読み込み待ちをするかどうか);
+//]]&gt;
+&lt;/script&gt;</code></pre>
+
+<h3>設定項目</h3>
+<dl>
+	<dt>height（'文字数em'|'高さpx'|'width'）</dt>
+	<dd>縦書きブロックの高さ / マルチカラムが有効の場合は一段の高さ(column-width) / width=親要素の幅を高さとする</dd>
+	<dt>maxHeight（'文字数em'|'高さpx'）</dt>
+	<dd>最大の高さ（height が指定されていないとき、この値を越えない範囲でウィンドウサイズに合わせて高さを調整します。）</dd>
+	<dt>multiColumnEnabled</dt>
+	<dd>
+	マルチカラムを有効にするかどうか設定します。
+		<dl>
+			<dt>false（初期値）</dt>
+			<dd>マルチカラムを無効にします。</dd>
+			<dt>'auto'</dt>
+			<dd>マルチカラムに十分に対応したブラウザではマルチカラムを有効にします。現在のところ Firefox のみ有効になります。WebKit 系ブラウザでは文字を回転させると表示が崩れるため、マルチカラムを無効にします。</dd>
+			<dt>true【非推奨】</dt>
+			<dd>マルチカラムに対応していないブラウザでも疑似的にマルチカラムを再現します。ただし現状では非常に動作が重くなりますのでテスト目的以外で使用しないでください。</dd>
+		</dl>
+	</dd>
+	<dt>fontFamily</dt>
+	<dd>
+	縦書き表示時のフォントを設定します。
+		<dl>
+			<dt>'serif'</dt>
+			<dd>明朝系フォントで表示します。</dd>
+			<dt>'sans-serif'</dt>
+			<dd>ゴシック系フォントで表示します。</dd>
+		</dl>
+	</dd>
+	<dt>gap（'文字数em'|'高さpx'）</dt>
+	<dd>下マージン/マルチカラムが有効の場合はカラム間隔=column-gap</dd>
+	<dt>togglable</dt>
+	<dd>
+	要素があらかじめ指定されているとき、ダブルクリックで表示切り替えをするかどうか設定します。
+		<dl>
+			<dt>true</dt>
+			<dd>ダブルクリックで表示を切り替えます。</dd>
+			<dt>false</dt>
+			<dd>ダブルクリックで表示を切り替えません。</dd>
+		</dl>
+	</dd>
+</dl>
+<p>これら設定項目は、class 名「class="taketori-設定項目-設定値"」として個別に指定することもできます（togglable を除く）。</p>
+<pre><code>class="taketori-maxHeight-30em taketori-fontFamily-sans-serif"</code></pre>
+
+<h3>要素の指定方法</h3>
+<dl>
+	<dt>'要素ID'</dt>
+	<dd>要素ID を指定します。</dd>
+	<dt>'要素タグ名.要素class名'</dt>
+	<dd>要素タグ名と要素class名で指定します。class名のみで指定することはできません。</dd>
+	<dt>'=auto'</dt>
+	<dd>日本語文章を自動検出して縦書きにします。</dd>
+	<dt>'=dblclick'</dt>
+	<dd>ダブルクリックされたブロックを縦書きにします。</dd>
+</dl>
+<p>指定したい要素のパターンが複数ある場合はカンマで区切って指定します。</p>
+<pre><code>(new Taketori()).set({fontFamily:'sans-serif',togglable:true,height:'10em'}).element('id-1','div.tategaki').toVertical();</code></pre>
+
+<h3>.toVertical(true|false) の引数について</h3>
+<p>.toVertical(true|false) の引数では画面の読み込み待ちをするかどうかを設定します。初期値は「true」（画面の読み込み待ちをする）です。ページを表示した後、ボタンなどで縦書き表示させる場合は「false」を設定してください。</p>
+
+<h3>ダブルクリックではなく切り替えボタンで表示を切り替える例</h3>
+<pre><code>&lt;div class=&quot;tategaki&quot;&gt;
+縦書き領域です。
+&lt;/div&gt;
+&lt;a href=&quot;#&quot; id=&quot;toggle&quot;&gt;表示切り替え&lt;/a&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;taketori.js&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+//&lt;![CDATA[
+var taketori = (new Taketori()).set({fontFamily:&#39;sans-serif&#39;}).element(&#39;div.tategaki&#39;).toVertical();
+taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,function (e) {
+	taketori.toggleAll();
+	taketori.document.stopPropagation(e);
+	taketori.document.preventDefault(e);
+	return false;
+});
+//]]&gt;
+&lt;/script&gt;</code></pre>
+
+<h2>よくある質問</h2>
+
+<dl class="item">
+	<dt>InternetExplorer 以外の環境でテキストを選択しようとするとものすごい勢いでスクロールしてしまいます。</dt>
+	<dd>スクロールを止める方法を模索中です。もしいい方法がありましたらぜひ<a href="http://cmonos.jp/cgi/feedback/start.cgi" target="_blank">お知らせください</a>。現状でテキストを選択するには、選択したい文字列の開始点をクリックし、シフトキーを押しながら終了点をクリックします。また、スクロールバーが表示されない状態（マルチカラムを有効にしている場合や縦書き対象テキストが少ない場合）では、問題なくテキストを選択できます。</dd>
+	<dt>下線や上線、打ち消し線など、text-decoration が変です。</dt>
+	<dd>InternetExplorer 以外の環境では「text-decoration」を疑似的に再現しています。うまく表示できない場合は、「text-decoration:none」とすることをおすすめします。</dd>
+	<dt>Opera で日本語文字列のみおかしな場所に表示されます。</dt>
+	<dd>おかしな場所に表示される文字列を含む要素に「position: relative」を設定すると期待通り表示されることが多いようです。</dd>
+	<dt>使用サンプルはありますか？</dt>
+	<dd><a href="http://cmonos.com/" target="_blank">CMONOS.JP サンプルサイト</a>の「<a href="http://cmonos.com/sample1/noveljs/" target="_blank">サンプル2/縦書きで読む(竹取JS版)</a>」をご覧ください。</dd>
+	<dt>表示されるまで時間がかかり過ぎます。</dt>
+	<dd>縦書き変換ウェブサービス「<a href="http://taketori.org/">竹取Web</a>」をお試しください。ダウンロード版もあります。</dd>
+</dl>
+
+<h2>作成者</h2>
+
+<dl>
+	<dt>ライセンス</dt><dd>MITライセンス</dd>
+	<dt>著作権</dt><dd><a href="http://cmonos.jp/" target="_blank">株式会社CMONOS</a></dd>
+	<dt>お問い合わせ</dt><dd><a href="http://cmonos.jp/cgi/inquiry/start.cgi" target="_blank">株式会社CMONOS お問い合わせフォーム</a></dd>
+	<dt>ご意見・ご要望</dt><dd><a href="http://cmonos.jp/cgi/feedback/start.cgi" target="_blank">株式会社CMONOS フィードバックフォーム</a></dd>
+	<dt>GitHub</dt><dd><a href="https://github.com/cmonos/TAKETORI-JS" target="_blank">cmonos / TAKETORI-JS</a></dd>
+	<dt>フォーラム（BBS）</dt><dd><a href="http://cmonos.jp/cgi/forum/start.cgi" target="_blank">株式会社CMONOS フォーラム</a></dd>
+	<dt>責任の制限</dt><dd>過失を含むいかなる場合であっても、株式会社CMONOS は本スクリプトを使用したことに起因する若しくは関連する付随的、間接損害について、一切の責任を負いません。</dd>
+</dl>
+
+<h2>バージョン履歴</h2>
+
+<dl class="item">
+	<dt>2010年11月21日 ver1.0.6</dt><dd>
+		<ul>
+			<li>write-mode 対応環境向け縦書き class 名を「taketori-msie-ttb」から「taketori-writingmode-ttb」に変更しました。</li>
+			<li>縦書き対象に指定された要素に対して、「writing-mode: tb-rl」または「-webkit-writing-mode: vertical-rl」があらかじめ設定されている場合、縦書き化対象としないようにしました。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月14日 ver1.0.5</dt><dd>
+		<ul>
+			<li>「taketori-ie.css」を「taketori.css」に統合しました。</li>
+			<li>InternetExplorer8 でスタイル指定が90度回転しない場合がある不具合を修正しました。</li>
+			<li>InternetExplorer5.5+ と Opera10.5+ で、高さが適切に設定されない場合がある不具合を修正しました。</li>
+			<li>InternetExplorer 以外の環境でも「—」などの記号が90度回転するようにしました。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月13日 ver1.0.4</dt><dd>
+		<ul>
+			<li>&lt;head&gt; 内で呼び出すとエラーが返る不具合を修正しました。</li>
+			<li>InternetExplorer の場合、縦書き対象ブロックに class名「taketori-msie」を追加するようにしました。InternetExplorer と他のブラウザとでは縦書きを実現する方法が異なるため、InternetExplorer にのみ適用するスタイルを指定しやすくしました。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月10日 ver1.0.3</dt><dd>
+		<ul>
+			<li>「♪」などの記号が横倒しにならないようにしました。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月9日 ver1.0.2</dt><dd>
+		<ul>
+			<li>使用されているフレームワークによっては、そのフレームワークの関数を属性として書き出してしまう場合がある問題を修正しました(見た目上これまでのバージョンでも特に問題は発生しません)。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月5日 22:00 ver1.0.1</dt><dd>
+		<ul>
+			<li>非対応環境では動作しないようにしました。</li>
+		</ul>
+	</dd>
+	<dt>2010年7月5日 ver1.0.0</dt><dd>
+		<ul>
+			<li>最初に公開されたバージョンです。</li>
+		</ul>
+	</dd>
+</dl>
+
+</body>
+</html>
