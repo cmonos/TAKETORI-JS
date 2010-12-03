@@ -1135,7 +1135,7 @@ Taketori.prototype = {
 				text.replace(/&#?\w+;|\s+|./g,function (w) {
 
 					//CJK
-					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF19\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
+					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF1B\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
 						taketori.setCJK();
 						if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? ' style="margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + '>' + w + '</span>');
 						count++;
@@ -1332,6 +1332,9 @@ Taketori.prototype = {
 			return 'kakko';
 		} else if (w.search(/^[\u3008\u300A\u300C\u300E\u3010\u3014\u3015\u3018\uFF08\uFF5B\uFF5F]$/) != -1) {
 			return 'kakko';
+		} else if (/^[\uFF1A\uFF1B\uFF1F]/.test(w)) {
+			this.process.kinsoku = true;
+			return 'cjk';
 		} else {
 			return 'cjk';
 		}
