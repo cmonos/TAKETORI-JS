@@ -1,10 +1,25 @@
 @charset "UTF-8";
 
+.taketori-sans-serif-ja,
 .taketori-sans-serif {
   font-family: 'Lucida Grande','Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','HiraKakuProN-W3',Verdana,'メイリオ','Meiryo','ＭＳ ゴシック','MS Gothic',Osaka,arial,helvetica,sans-serif !important;
 }
+
+.taketori-sans-serif-zh-tw {
+  font-family: 'Heiti TC', 'LiHei Pro', '微軟正黑體', Arial, Helvetica, sans-serif !important;
+}
+
+.taketori-serif-ja,
 .taketori-serif {
   font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif !important;
+}
+
+.taketori-serif-zh-tw {
+  font-family: 'Apple LiSong', Times, 'Times New Roman', '新細明體', PMingLiu, serif !important;
+}
+
+.taketori-kai-zh-tw {
+  font-family: '教育部標準楷書', '全字庫正楷體', '標楷體', 'BiauKai', 'STKaiti', Kai, serif !important;
 }
 
 .taketori-ttb span { cursor: vertical-text; }
