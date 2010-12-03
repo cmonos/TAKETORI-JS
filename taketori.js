@@ -639,7 +639,7 @@ Taketori.prototype = {
 	configClone : function (config) {
 		if (!config) return {};
 		var clone = {};
-		var configNames = ['width','height','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight','onbreak','classNameImported'];
+		var configNames = ['width','height','disableShiftTen','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight','onbreak','classNameImported'];
 		for(var i=0; i<configNames.length; i++) {
 			if (config[configNames[i]] != null) clone[configNames[i]] = config[configNames[i]];
 		}
@@ -932,6 +932,7 @@ Taketori.prototype = {
 		var className = (this.isWritingModeReady) ? 'taketori-writingmode-ttb' : 'taketori-ttb';
 		if (this.rubyDisabled) className += ' taketori-ruby-disabled';
 		if (this.process.currentConfig.fontFamily) className += ((this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : ' taketori-serif');
+		if (this.process.currentConfig.disableShiftTen) className += ' taketori-disable-shift-ten';
 		element.className += ((element.className) ? ' ' : '') + className;
 	},
 

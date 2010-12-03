@@ -88,6 +88,12 @@
 .taketori-ttb span.ku-ten {
   margin: -0.6em 0.64em 0.6em -0.64em !important;
 }
+
+.taketori-disable-shift-ten span.tou-ten,
+.taketori-disable-shift-ten span.ku-ten {
+  margin: 0 !important;
+}
+
 .taketori-ttb span.kogaki {
   margin: -0.2em 0.15em 0.2em -0.15em !important;
 }
