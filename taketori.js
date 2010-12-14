@@ -1,11 +1,18 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.0.6
+ * Version: 1.1.0
  * Lisence: MIT Lisence
- * Last-Modified: 2010-11-21
+ * Last-Modified: 2010-12-15
  */
-var TaketoriDblClickAlert = "\uFEFF\u7E26\u66F8\u304D\u5316\u3057\u305F\u3044\u90E8\u5206\u3092\u30C0\u30D6\u30EB\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044\u3002";
+
+
+var TaketoriDblClickAlert = {	// should be unicode entity for Opera.
+	'ja-jp' : "\uFEFF\u7E26\u66F8\u304D\u5316\u3057\u305F\u3044\u90E8\u5206\u3092\u30C0\u30D6\u30EB\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+	'zh-tw' : "Double click to make text vertical."
+};
+var TaketoriDefaultLang = "ja-jp";
+
 var TaketoriTool = function () {};
 TaketoriTool.prototype = {
 
@@ -230,6 +237,7 @@ Taketori.prototype = {
 		if (this.isLegacy) return this;
 		if (!this.config) this.config = {};
 		if (hash != null) this.merge(this.config,hash);
+		if (this.config.lang) this.config.lang = this.config.lang.toLowerCase();
 		return this;
 	},
 
@@ -599,7 +607,7 @@ Taketori.prototype = {
 					this.toggleEventAttached = true;
 				}
 				if (setOnly) {
-					alert(TaketoriDblClickAlert);
+					alert(TaketoriDblClickAlert[this.config.lang || TaketoriDefaultLang]);
 					return this;
 				}
 			}
@@ -639,7 +647,7 @@ Taketori.prototype = {
 	configClone : function (config) {
 		if (!config) return {};
 		var clone = {};
-		var configNames = ['width','height','disableShiftTen','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight','onbreak','classNameImported'];
+		var configNames = ['width','height','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight','onbreak','classNameImported','lang'];
 		for(var i=0; i<configNames.length; i++) {
 			if (config[configNames[i]] != null) clone[configNames[i]] = config[configNames[i]];
 		}
@@ -726,7 +734,7 @@ Taketori.prototype = {
 		if (!currentConfig.classNameImported) {
 			var className = element.className;
 			if (className) {
-				var configNames = ['width','height','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight'];
+				var configNames = ['width','height','fontFamily','maxHeight','multiColumnEnabled','gap','contentWidth','contentHeight','lang'];
 				for(var i=0; i<configNames.length; i++) {
 					var regexp = new RegExp("(^|\\s)taketori-"+configNames[i]+"-([\\w\\.\\-\\%]+)(?![\\w\\-])",'i');
 					if (className.search(regexp) != -1) currentConfig[configNames[i]] = RegExp.$2;
@@ -734,6 +742,7 @@ Taketori.prototype = {
 			}
 			currentConfig.classNameImported = true;
 		}
+		currentConfig.lang = (currentConfig.lang) ? currentConfig.lang.toLowerCase() : TaketoriDefaultLang;
 		this.init();
 		var contentStyle = this.getStyle(element);
 		var fontSize = this.getFontSize(contentStyle.fontSize);
@@ -931,8 +940,12 @@ Taketori.prototype = {
 	setTaketoriClassName : function (element) {
 		var className = (this.isWritingModeReady) ? 'taketori-writingmode-ttb' : 'taketori-ttb';
 		if (this.rubyDisabled) className += ' taketori-ruby-disabled';
-		if (this.process.currentConfig.fontFamily) className += ((this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : ' taketori-serif');
-		if (this.process.currentConfig.disableShiftTen) className += ' taketori-disable-shift-ten';
+		if (this.process.currentConfig.fontFamily) className += (
+			(this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : 
+			(this.process.currentConfig.fontFamily == 'cursive') ? ' taketori-cursive' : 
+			(this.process.currentConfig.fontFamily == 'kai') ? ' taketori-kai' : 
+			' taketori-serif'
+		) + '-' + this.process.currentConfig.lang;
 		element.className += ((element.className) ? ' ' : '') + className;
 	},
 
@@ -1321,10 +1334,10 @@ Taketori.prototype = {
 			return "cjk cho-on";
 		} else if (w == "\u3001" || w == "\uFF0C") {
 			this.process.kinsoku = true;
-			return "cjk tou-ten";
+			return (this.process.currentConfig.lang == "ja-jp") ? "cjk tou-ten" : "cjk";
 		} else if (w == "\u3002" || w == "\uFF0E") {
 			this.process.kinsoku = true;
-			return "cjk ku-ten";
+			return (this.process.currentConfig.lang == "ja-jp") ? "cjk ku-ten" : "cjk";
 		} else if (w.search(/^[\u3041\u3043\u3045\u3047\u3049\u3083\u3085\u3087\u3063\u30A1\u30A3\u30A5\u30A7\u30A9\u30E3\u30E5\u30E7\u30C3]$/) != -1) {
 			this.process.kinsoku = true;
 			return 'cjk kogaki';
@@ -1333,7 +1346,7 @@ Taketori.prototype = {
 			return 'kakko';
 		} else if (w.search(/^[\u3008\u300A\u300C\u300E\u3010\u3014\u3015\u3018\uFF08\uFF5B\uFF5F]$/) != -1) {
 			return 'kakko';
-		} else if (/^[\uFF1A\uFF1B\uFF1F]/.test(w)) {
+		} else if (w.search(/^[\uFF01\uFF1A\uFF1B\uFF1F]$/) != -1) { // use "search" for IE5.5.
 			this.process.kinsoku = true;
 			return 'cjk';
 		} else {
