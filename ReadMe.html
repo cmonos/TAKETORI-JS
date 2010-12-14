@@ -83,6 +83,30 @@ pre {
 
 <h3>設定項目</h3>
 <dl>
+	<dt>lang</dt>
+	<dd>
+	言語を明示的に指定します。
+		<dl>
+			<dt>'ja-jp'</dt>
+			<dd>表示を日本語環境に最適化します。</dd>
+			<dt>'zh-tw'</dt>
+			<dd>表示を中国語-台湾(繁体字)に最適化します。</dd>
+		</dl>
+	</dd>
+	<dt>fontFamily</dt>
+	<dd>
+	縦書き表示時のフォントを設定します。
+		<dl>
+			<dt>'serif'</dt>
+			<dd>明朝系フォントで表示します。</dd>
+			<dt>'sans-serif'</dt>
+			<dd>ゴシック系フォントで表示します。</dd>
+			<dt>'cursive'</dt>
+			<dd>行書体系フォントで表示します。</dd>
+			<dt>'kai'</dt>
+			<dd>楷書体系フォントで表示します。</dd>
+		</dl>
+	</dd>
 	<dt>height（'文字数em'|'高さpx'|'width'）</dt>
 	<dd>縦書きブロックの高さ / マルチカラムが有効の場合は一段の高さ(column-width) / width=親要素の幅を高さとする</dd>
 	<dt>maxHeight（'文字数em'|'高さpx'）</dt>
@@ -99,18 +123,6 @@ pre {
 			<dd>マルチカラムに対応していないブラウザでも疑似的にマルチカラムを再現します。ただし現状では非常に動作が重くなりますのでテスト目的以外で使用しないでください。</dd>
 		</dl>
 	</dd>
-	<dt>fontFamily</dt>
-	<dd>
-	縦書き表示時のフォントを設定します。
-		<dl>
-			<dt>'serif'</dt>
-			<dd>明朝系フォントで表示します。</dd>
-			<dt>'sans-serif'</dt>
-			<dd>ゴシック系フォントで表示します。</dd>
-		</dl>
-	</dd>
-	<dt>disableShiftTen</dt>
-	<dd>Disable the positional shift for tou-ten and ku-ten punctuation marks for Japanese fonts.</dd>
 	<dt>gap（'文字数em'|'高さpx'）</dt>
 	<dd>下マージン/マルチカラムが有効の場合はカラム間隔=column-gap</dd>
 	<dt>togglable</dt>
@@ -192,6 +204,12 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2010年12月15日 ver1.1.0</dt><dd>
+		<ul>
+			<li><a href="https://github.com/timdream/TAKETORI-JS">timdream/TAKETORI-JS</a> を統合し中国語(台湾)環境での縦書き化を改善しました(timdream さんありがとうございます！)。</li>
+			<li>言語指定オプションを追加しました。</li>
+		</ul>
+	</dd>
 	<dt>2010年11月21日 ver1.0.6</dt><dd>
 		<ul>
 			<li>write-mode 対応環境向け縦書き class 名を「taketori-msie-ttb」から「taketori-writingmode-ttb」に変更しました。</li>
