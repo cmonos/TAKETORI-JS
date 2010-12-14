@@ -36,6 +36,18 @@ Upload these two files same directory.
 
 ###Parameters
 
+lang
+
+* 'ja-jp' = Japanese
+* 'zh-tw' = Taiwanese
+
+fontFamily
+
+* 'serif'
+* 'sans-serif'
+* 'cursive'
+* 'kai'
+
 height（'em'|'px'|'width'=height of parent node.）
 
 maxHeight（'em'|'px'）
@@ -45,11 +57,6 @@ multiColumnEnabled
 * false(default)
 * 'auto'
 * true(too slow)
-
-fontFamily
-
-* 'serif'
-* 'sans-serif'
 
 gap（'em'|'px'）(=column-gap)
 
@@ -86,4 +93,3 @@ You can set these parameters as class name.
 	});
 	//]]>
 	</script>
-
