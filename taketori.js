@@ -1,7 +1,7 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.1.0
+ * Version: 1.1.1
  * Lisence: MIT Lisence
  * Last-Modified: 2010-12-15
  */
@@ -11,7 +11,7 @@ var TaketoriDblClickAlert = {	// should be unicode entity for Opera.
 	'ja-jp' : "\uFEFF\u7E26\u66F8\u304D\u5316\u3057\u305F\u3044\u90E8\u5206\u3092\u30C0\u30D6\u30EB\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
 	'zh-tw' : "\u9ede\u5169\u4e0b\u4ee5\u5207\u63db\u5230\u76f4\u6392\u986f\u793a\u3002"
 };
-var TaketoriDefaultLang = "ja-jp";
+var TaketoriDefaultLang = ((navigator.browserLanguage || navigator.language || navigator.userLanguage).search(/tw/i) != -1) ? "zh-tw" : "ja-jp";
 
 var TaketoriTool = function () {};
 TaketoriTool.prototype = {
@@ -946,6 +946,7 @@ Taketori.prototype = {
 			(this.process.currentConfig.fontFamily == 'kai') ? ' taketori-kai' : 
 			' taketori-serif'
 		) + '-' + this.process.currentConfig.lang;
+		className += ' taketori-lang-' + this.process.currentConfig.lang;
 		element.className += ((element.className) ? ' ' : '') + className;
 	},
 
