@@ -248,6 +248,13 @@
   left: 0;
   margin: -0.3em 0 0 1em;
 }
+.taketori-lang-ja-jp strong span.cjk:after {
+  margin: -0.3em 0 0 1em;
+}
+.taketori-lang-zh-tw strong span.cjk:after {
+  margin: 0 0 0 0.75em;
+}
+
 .taketori-ttb strong span.ku-ten:after,
 .taketori-ttb strong span.tou-ten:after {
   content: "";
@@ -255,12 +262,24 @@
 .taketori-ttb strong span.kogaki:after {
   margin: -0.15em 0 0 0.8em;
 }
+.taketori-lang-ja-jp strong span.kogaki:after {
+  margin: -0.15em 0 0 0.8em;
+}
+.taketori-lang-zh-tw strong span.kogaki:after {
+  margin: 0.15em 0 0 0.55em;
+}
 .taketori-ttb strong span.cho-on:after {
   -moz-transform: scale(1.0,-1.0) rotate(-90deg);
   -webkit-transform: scale(1.0,-1.0) rotate(-90deg);
   -o-transform: scale(1.0,-1.0) rotate(-90deg);
   transform: scale(1.0,-1.0) rotate(-90deg);
   margin: 1em 0.3em -1em -0.3em;
+}
+.taketori-lang-ja-jp strong span.cho-on:after {
+  margin: 1em 0.3em -1em -0.3em;
+}
+.taketori-lang-zh-tw strong span.cho-on:after {
+  margin: 0.75em 0 -0.75em 0;
 }
 
 .taketori-ttb ul.cjk, .taketori-ttb ol.cjk {
@@ -339,6 +358,12 @@
   position: absolute;
   margin: -0.55em -0.05em 0.55em 0.05em;
 }
+.taketori-lang-ja-jp strong.bo-ten span.cjk:after {
+  margin: -0.55em -0.05em 0.55em 0.05em;
+}
+.taketori-lang-zh-tw strong.bo-ten span.cjk:after {
+  margin: -1em 0.25em 1em -0.25em;
+}
 
 .taketori-writingmode-ttb ul.cjk, .taketori-writingmode-ttb ol.cjk {
   list-style-type: none;
@@ -358,5 +383,4 @@
   line-height: 1;
   margin: -1.5em 0 0 -0.3em;
 }
-
 
