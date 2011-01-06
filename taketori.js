@@ -1,7 +1,7 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.1.1
+ * Version: 1.1.2
  * Lisence: MIT Lisence
  * Last-Modified: 2010-12-15
  */
@@ -68,12 +68,12 @@ TaketoriTool.prototype = {
 	},
 
 	removeClassName : function(cName) {
-		return this.replaceClassName(cName,'');
+		return this.replaceClassName(cName,'','ig');
 	},
 
-	replaceClassName : function(cName,newName) {
+	replaceClassName : function(cName,newName,flag) {
 		if (this.elements && cName != null && cName != "") {
-			var regexp = new RegExp("(^|\\s)"+cName+"(?![\\w\\-])");
+			var regexp = new RegExp("(^|\\s)"+cName+"(?![\\w\\-])",flag);
 			if (newName == null) newName = '';
 			for (var i=0; i < this.elements.length; i++) {
 				if (this.elements[i].className != null) this.elements[i].className = this.elements[i].className.replace(regexp,newName);
@@ -951,7 +951,7 @@ Taketori.prototype = {
 	},
 
 	removeTaketoriClassName : function (element) {
-		this.document.element(element).removeClassName('taketori-ttb').removeClassName('taketori-writingmode-ttb').removeClassName('taketori-ruby-disabled').removeClassName('taketori-serif').removeClassName('taketori-sans-serif');
+		this.document.element(element).removeClassName('taketori-ttb').removeClassName('taketori-writingmode-ttb').removeClassName('taketori-ruby-disabled').removeClassName('taketori-(lang|serif|sans-serif|cursive|kai)[\\w\\-]*');
 	},
 
 	make : function(element,configReady) {
