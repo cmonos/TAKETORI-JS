@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
- * Copyright 2010 CMONOS. Co,Ltd (http://cmonos.jp)
+ * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
  * Version: 1.1.3
  * Lisence: MIT Lisence
- * Last-Modified: 2010-01-13
+ * Last-Modified: 2011-01-13
  */
 
 
