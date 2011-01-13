@@ -1,17 +1,25 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.1.2
+ * Version: 1.1.3
  * Lisence: MIT Lisence
- * Last-Modified: 2010-12-15
+ * Last-Modified: 2010-01-13
  */
 
 
 var TaketoriDblClickAlert = {	// should be unicode entity for Opera.
 	'ja-jp' : "\uFEFF\u7E26\u66F8\u304D\u5316\u3057\u305F\u3044\u90E8\u5206\u3092\u30C0\u30D6\u30EB\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-	'zh-tw' : "\u9ede\u5169\u4e0b\u4ee5\u5207\u63db\u5230\u76f4\u6392\u986f\u793a\u3002"
+	'zh-tw' : "\u9ede\u5169\u4e0b\u4ee5\u5207\u63db\u5230\u76f4\u6392\u986f\u793a\u3002",
+	'zh-cn' : "Double click to make text vertical.",
+	'ko-kr' : "Double click to make text vertical."
 };
-var TaketoriDefaultLang = ((navigator.browserLanguage || navigator.language || navigator.userLanguage).search(/tw/i) != -1) ? "zh-tw" : "ja-jp";
+var TaketoriDefaultLang = (document.getElementsByTagName('html')[0] && document.getElementsByTagName('html')[0].lang) ? 
+			(document.getElementsByTagName('html')[0].lang.search(/tw/i) != -1) ? "zh-tw"
+//		:	(document.getElementsByTagName('html')[0].lang.search(/(zh|cn)/i) != -1) ? "zh-cn"
+//		:	(document.getElementsByTagName('html')[0].lang.search(/(ko|kr)/i) != -1) ? "ko-kr"
+		:	"ja-jp"
+	:	"ja-jp";
+//var TaketoriDefaultLang = "ja-jp"; // or .. simply set your language.
 
 var TaketoriTool = function () {};
 TaketoriTool.prototype = {
@@ -607,7 +615,11 @@ Taketori.prototype = {
 					this.toggleEventAttached = true;
 				}
 				if (setOnly) {
-					alert(TaketoriDblClickAlert[this.config.lang || TaketoriDefaultLang]);
+					var user_lang = navigator.browserLanguage || navigator.language || navigator.userLanguage;
+					user_lang = (user_lang.search(/tw/i) != -1) ? "zh-tw" : 
+								(user_lang.search(/(zh|cn)/i) != -1) ? "zh-cn" : 
+								(user_lang.search(/(ko|kr)/i) != -1) ? "ko-kr" : "ja-jp";
+					alert(TaketoriDblClickAlert[user_lang]);
 					return this;
 				}
 			}
