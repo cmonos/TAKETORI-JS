@@ -32,6 +32,7 @@
   font-family: '教育部標準楷書', '全字庫正楷體', '標楷體', 'BiauKai', 'STKaiti', Kai, serif !important;
 }
 
+.taketori-ttb { overflow: hidden; }
 .taketori-ttb span { cursor: vertical-text; }
 .taketori-ttb a span { cursor: pointer; !important }
 
