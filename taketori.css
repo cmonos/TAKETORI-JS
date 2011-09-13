@@ -52,7 +52,7 @@
 }
 .taketori-ttb span.tcy {
   min-width: 1em;
-  text-align: center;
+  text-align: center !important;
   cursor: text;
 }
 .taketori-ttb span.cjk, .taketori-ttb span.tcy, .taketori-ttb span.ltr {
@@ -62,7 +62,7 @@
   -webkit-transform:rotate(-90deg);
   -o-transform:rotate(-90deg);
   transform:rotate(-90deg);
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 .taketori-ttb ruby rb, .taketori-ttb ruby rt {
   line-height: 1;
@@ -76,11 +76,11 @@
   -webkit-transform:rotate(-90deg);
   -o-transform:rotate(-90deg);
   transform:rotate(-90deg);
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 .taketori-ttb .nocjk {
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 .taketori-ttb .ltr {
@@ -95,14 +95,14 @@
   -webkit-transform:none;
   -o-transform:none;
   transform:none;
-  vertical-align: baseline;
+  vertical-align: baseline !important;
 }
 .taketori-ttb .ltr span {
   cursor: text;
 }
 
 .taketori-ttb span.cho-on {
-  vertical-align: middle;
+  vertical-align: middle !important;
   -moz-transform: scale(1.0,-1.0);
   -webkit-transform: scale(1.0,-1.0);
   -o-transform: scale(1.0,-1.0);
@@ -118,7 +118,7 @@
   margin: -0.2em 0.15em 0.2em -0.15em !important;
 }
 .taketori-ttb span.kakko {
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 .taketori-ttb span.ku-ten,
 .taketori-ttb span.tou-ten,
@@ -384,4 +384,5 @@
   line-height: 1;
   margin: -1.5em 0 0 -0.3em;
 }
+
 
