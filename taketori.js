@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.1.3
+ * Version: 1.1.4
  * Lisence: MIT Lisence
- * Last-Modified: 2011-01-13
+ * Last-Modified: 2011-09-13
  */
 
 
@@ -1162,7 +1162,7 @@ Taketori.prototype = {
 				text.replace(/&#?\w+;|\s+|./g,function (w) {
 
 					//CJK
-					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF1B\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
+					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2460-\u24FF\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF1B\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
 						taketori.setCJK();
 						if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? ' style="margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + '>' + w + '</span>');
 						count++;
