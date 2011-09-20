@@ -15,7 +15,8 @@ Chinese, Japanese, Korean
 ###License
 MIT License
 
-###Web Service (CGI)
+Related Web Service (CGI)
+---------------
 http://taketori.org/
 (note: This CGI script is NOT "MIT License".)
 
