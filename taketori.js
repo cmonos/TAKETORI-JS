@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.1.4
+ * Version: 1.2.0
  * Lisence: MIT Lisence
- * Last-Modified: 2011-09-13
+ * Last-Modified: 2011-11-01
  */
 
 
@@ -152,14 +152,14 @@ Taketori.prototype = {
 	isMSIE : ((navigator.appVersion.search(/MSIE/) != -1) ? ((document.documentMode && document.documentMode > 7) ? 2 : 1) : 0),
 	isWritingModeReady : ((
 							navigator.appVersion.search(/MSIE/) != -1
-						// || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
-						// || typeof (document.createElement('div')).style.webkitWritingMode != 'undefined'
-						// || typeof (document.createElement('div')).style.OWritingMode != 'undefined'
+						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
+						 || typeof (document.createElement('div')).style.webkitWritingMode != 'undefined'
+						 || typeof (document.createElement('div')).style.OWritingMode != 'undefined'
 						 ) ? true : false),
 	isMultiColumnReady : ((
 							typeof (document.createElement('div')).style.MozColumnWidth != 'undefined'
-						// || typeof (document.createElement('div')).style.webkitColumnWidth != 'undefined'
-						// || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && typeof (document.createElement('div')).style.webkitColumnWidth != 'undefined')
+						 || typeof (document.createElement('div')).style.webkitColumnWidth != 'undefined'
+						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && typeof (document.createElement('div')).style.webkitColumnWidth != 'undefined')
 						 || typeof (document.createElement('div')).style.OColumnWidth != 'undefined'
 						 || typeof (document.createElement('div')).style.msColumnWidth != 'undefined'
 						 || typeof (document.createElement('div')).style.columnWidth != 'undefined'
@@ -169,6 +169,13 @@ Taketori.prototype = {
 			 || typeof (document.createElement('div')).style.webkitTransform != 'undefined'
 			 || typeof (document.createElement('div')).style.OTransform != 'undefined'
 			 || typeof (document.createElement('div')).style.transform != 'undefined') ? false : true),
+	isTextEmphasisReady : ((
+							typeof (document.createElement('div')).style.MozTextEmphasisStyle != 'undefined'
+						 || typeof (document.createElement('div')).style.webkitTextEmphasisStyle != 'undefined'
+						 || typeof (document.createElement('div')).style.OTextEmphasisStyle != 'undefined'
+						 || typeof (document.createElement('div')).style.msTextEmphasisStyle != 'undefined'
+						 || typeof (document.createElement('div')).style.textEmphasisStyle != 'undefined'
+						 ) ? true : false),
 
 	document : (new TaketoriTool()),
 
@@ -450,10 +457,15 @@ Taketori.prototype = {
 		}
 		if (this.isWritingModeReady && cssTextOnly) {
 			if (style.width && style.width.search(/\d+\.?\d*(px|em)/i) != -1 && parseInt(style.width) > 0 && style.height && style.height.search(/\d+\.?\d*(px|em)/i) != -1 && parseInt(style.height) > 0) {
-				swapWH = true;
+				if (element.currentStyle || (style.cssFloat && style.cssFloat != 'none') || (style.display == 'inline-block')) { 
+					swapWH = true;
+				} else {
+					temp.style.width = 'auto';
+					temp.style.height = 'auto';
+				}
 			} else if ((style.width && style.width.search(/\d+\.?\d*%/) != -1) || (style.height && style.height.search(/\d+\.?\d*%/) != -1)) {
-				temp.style.width = (style.height) ? style.height : 'auto';
-				temp.style.height = (style.width) ? style.width : 'auto';
+				temp.style.width = (style.height && style.height.search(/\d+\.?\d*%/) != -1) ? style.height : 'auto';
+				temp.style.height = (style.width && style.width.search(/\d+\.?\d*%/) != -1) ? style.width : 'auto';
 			} else {
 				if (style.width == '0px') temp.style.width = 'auto';
 				if (style.height == '0px') temp.style.height = 'auto';
@@ -550,7 +562,7 @@ Taketori.prototype = {
 				temp.style.backgroundPosition = RegExp.$2 + ' ' + RegExp.$1 + ';';
 			}
 		}
-		return (cssTextOnly) ? temp.style.cssText : this.outerHTML(temp);
+		return (cssTextOnly) ? temp.style.cssText + ';' + element.style.cssText : this.outerHTML(temp);
 	},
 
 	outerHTML : function(element) {
@@ -952,6 +964,7 @@ Taketori.prototype = {
 	setTaketoriClassName : function (element) {
 		var className = (this.isWritingModeReady) ? 'taketori-writingmode-ttb' : 'taketori-ttb';
 		if (this.rubyDisabled) className += ' taketori-ruby-disabled';
+		if (!this.isTextEmphasisReady) className += ' taketori-text-emphasis-disabled';
 		if (this.process.currentConfig.fontFamily) className += (
 			(this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : 
 			(this.process.currentConfig.fontFamily == 'cursive') ? ' taketori-cursive' : 
@@ -1090,8 +1103,10 @@ Taketori.prototype = {
 						}
 						if (this.isWritingModeReady) {
 							if (tag == 'strong') {
-								if (!this.process.kenten) setKenten = true;
-								this.process.kenten = true;
+								if (!this.isTextEmphasisReady) {
+									if (!this.process.kenten) setKenten = true;
+									this.process.kenten = true;
+								}
 								className += ((className) ? ' ' : '') + 'bo-ten';
 							}
 						}
