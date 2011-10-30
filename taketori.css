@@ -350,6 +350,10 @@
 .taketori-writingmode-ttb strong.bo-ten {
   font-weight: normal;
   -webkit-text-emphasis-style: filled;
+  -moz-text-emphasis-style: filled;
+  -o-text-emphasis-style: filled;
+  -ms-text-emphasis-style: filled;
+  text-emphasis-style: filled;
 }
 .taketori-writingmode-ttb strong.bo-ten span.cjk {
   display: inline-block;
