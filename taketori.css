@@ -32,7 +32,7 @@
   font-family: '教育部標準楷書', '全字庫正楷體', '標楷體', 'BiauKai', 'STKaiti', Kai, serif !important;
 }
 
-.taketori-ttb { overflow: hidden; }
+.taketori-ttb { overflow: hidden;  position: relative; }
 .taketori-ttb span { cursor: vertical-text; }
 .taketori-ttb a span { cursor: pointer; !important }
 
@@ -336,6 +336,7 @@
   -ms-writing-mode: lr-tb;
   /writing-mode: lr-tb;
   _writing-mode: lr-tb;
+  vertical-align: text-bottom;
 }
 
 .taketori-writingmode-ttb .underline {
@@ -348,6 +349,7 @@
 
 .taketori-writingmode-ttb strong.bo-ten {
   font-weight: normal;
+  -webkit-text-emphasis-style: filled;
 }
 .taketori-writingmode-ttb strong.bo-ten span.cjk {
   display: inline-block;
@@ -370,7 +372,8 @@
   list-style-type: none;
 }
 .taketori-writingmode-ttb ul.cjk li:before, .taketori-writingmode-ttb ol.cjk li:before {
-  display: block;
+  display: -moz-inline-block;
+  display: inline-block;
   content: attr(data-marker);
   -moz-writing-mode: horizontal-tb;
   -webkit-writing-mode: horizontal-tb;
@@ -378,11 +381,11 @@
   -ms-writing-mode: lr-tb;
   /writing-mode: lr-tb;
   _writing-mode: lr-tb;
-  position: absolute;
-  text-align: center;
   font-size: 0.8em;
   line-height: 1;
-  margin: -1.5em 0 0 -0.3em;
+  margin: -1.2em 0 0.2em -0.2em;
+  text-align: center;
+  vertical-align: text-bottom;
 }
 
 
