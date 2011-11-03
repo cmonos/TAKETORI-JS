@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.0
+ * Version: 1.2.1
  * Lisence: MIT Lisence
- * Last-Modified: 2011-11-01
+ * Last-Modified: 2011-11-03
  */
 
 
@@ -510,9 +510,13 @@ Taketori.prototype = {
 					var cw = w - mw;
 					var ch = h - mh;
 					if (swapWH) {
-						temp.width = ch;
+						if (element.currentStyle || (style.display == 'inline-block')) { 
+							temp.width = ch;
+							temp.style.width = ch + 'px';
+						} else {
+							temp.style.width = 'auto';
+						}
 						temp.height = cw;
-						temp.style.width = ch + 'px';
 						temp.style.height = cw + 'px';
 					} else {
 						temp.width = cw;
@@ -804,7 +808,7 @@ Taketori.prototype = {
 			var windowSize = (this.process.config.contentHeight) ? this.process.config.contentHeight : this.windowHeight;
 			if (this.process.config.multiColumnEnabled) {
 				var r = Math.ceil(windowSize / (maxHeight + this.process.config.gap));
-				this.process.config.height = parseInt((windowSize+this.process.config.gap) / r) - this.process.config.gap;
+				this.process.config.height = parseInt((windowSize-40) / r) - this.process.config.gap;
 				if (this.process.config.contentHeight) this.process.config.columnCount = r;
 			} else {
 				windowSize = windowSize - this.process.config.gap - 18;
