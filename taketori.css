@@ -9,7 +9,7 @@
 }
 
 .taketori-serif-ja-jp {
-  font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif !important;
+  font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','@ＭＳ 明朝','ＭＳ 明朝','MS Mincho',serif !important;
 }
 
 .taketori-serif-zh-tw {
@@ -17,7 +17,7 @@
 }
 
 .taketori-cursive-ja-jp {
-  font-family: 'ＤＦＰ行書体','ＤＦ行書体','AGENDA人名行書体L1','HGP行書体','HGS行書体','HG行書体',cursive,'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif !important;
+  font-family: 'ＤＦＰ行書体','ＤＦ行書体','AGENDA人名行書体L1','HGP行書体','HGS行書体','HG行書体',cursive,'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','@ＭＳ 明朝','ＭＳ 明朝','MS Mincho',serif !important;
 }
 
 .taketori-cursive-zh-tw {
@@ -25,7 +25,7 @@
 }
 
 .taketori-kai-ja-jp {
-  font-family: 'ＤＦＰ楷書体','HG正楷書体-PRO','ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif !important;
+  font-family: 'ＤＦＰ楷書体','HG正楷書体-PRO','ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','@ＭＳ 明朝','ＭＳ 明朝','MS Mincho',serif !important;
 }
 
 .taketori-kai-zh-tw {
