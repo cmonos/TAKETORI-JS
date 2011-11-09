@@ -184,6 +184,7 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 	<dd>InternetExplorer 以外の環境では「text-decoration」を疑似的に再現しています。うまく表示できない場合は、「text-decoration:none」とすることをおすすめします。</dd>
 	<dt>Opera で日本語文字列のみおかしな場所に表示されます。</dt>
 	<dd>おかしな場所に表示される文字列を含む要素に「position: relative」を設定すると期待通り表示されることが多いようです。</dd>
+	<dd>Windows 版 Chrome の縦書き(-webkit-writing-mode: vertical-rl)は、現在のところ「@ＭＳ 明朝」でのみ可能となっているようです。将来のバージョンで InternetExplorer 同様「@」なしでも縦書き表示と鳴ることを期待しましょう。Mac 版 Chrome ではどんなフォントでも問題なく縦書きになります。</dd>
 	<dt>使用サンプルはありますか？</dt>
 	<dd><a href="http://cmonos.com/" target="_blank">CMONOS.JP サンプルサイト</a>の「<a href="http://cmonos.com/sample1/noveljs/" target="_blank">サンプル2/縦書きで読む(竹取JS版)</a>」をご覧ください。</dd>
 	<dt>表示されるまで時間がかかり過ぎます。</dt>
@@ -205,6 +206,11 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2011年11月3日 ver1.2.2</dt><dd>
+		<ul>
+			<li>Windows 版 Chrome の縦書きが「@ＭＳ 明朝」以外では動作しないため CSS に「@ＭＳ 明朝」の指定を追加しました。</li>
+		</ul>
+	</dd>
 	<dt>2011年11月3日 ver1.2.1</dt><dd>
 		<ul>
 			<li>段組高さを調整しました。</li>
@@ -213,7 +219,7 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 	</dd>
 	<dt>2011年11月1日 ver1.2.0</dt><dd>
 		<ul>
-			<li>writing-mode に対応した Safari および Chrome で writing-mode による縦書きに対応しました。</li>
+			<li>writing-mode に対応した Safari および Chrome で writing-mode による縦書きに対応しました。最新版 Chrome で90度か移転方式による縦書き化を実行するとスクロールできなくなっていたため、writing-mode による縦書きに変更しました。</li>
 			<li>text-emphasis に対応した Safari および Chrome で text-emphasis による傍点に対応しました。</li>
 		</ul>
 	</dd>
