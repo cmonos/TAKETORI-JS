@@ -551,16 +551,17 @@ Taketori.prototype = {
 				temp.style.overflowX = (style.overflowY) ? style.overflowY : 'visible';
 				temp.style.overflowY = (style.overflowX) ? style.overflowX : 'visible';
 			}
+			if (style.backgroundPositionX || style.backgroundPositionY) {
+				temp.style.backgroundPositionX = (style.backgroundPositionY) ? (style.backgroundPositionY == 'top') ? 'left' : (style.backgroundPositionY == 'bottom') ? 'right' : style.backgroundPositionY : '50%';
+				temp.style.backgroundPositionY = (style.backgroundPositionX) ? (style.backgroundPositionX == 'left') ? 'top' : (style.backgroundPositionX == 'right') ? 'bottom' : style.backgroundPositionX : '50%';
+			} else if (style.backgroundPosition && style.backgroundPosition.search(/(\S+)\s+(\S)/) != -1) {
+				temp.style.backgroundPosition = RegExp.$2 + ' ' + RegExp.$1 + ';';
+			}
 			if (isBlock || !cssTextOnly || !this.isMSIE || this.isMSIE == 1) {
 				if (style.marginLeft) temp.style.marginTop = style.marginLeft;
 				if (style.marginTop) temp.style.marginRight = style.marginTop;
 				if (style.marginRight) temp.style.marginBottom = style.marginRight;
 				if (style.marginBottom) temp.style.marginLeft = style.marginBottom;
-				if (style.backgroundPositionX) {
-					temp.style.backgroundPosition = style.backgroundPositionY + ' ' + style.backgroundPositionX;
-				} else if (style.backgroundPosition && style.backgroundPosition.search(/(\S+)\s+(\S)/) != -1) {
-					temp.style.backgroundPosition = RegExp.$2 + ' ' + RegExp.$1 + ';';
-				}
 			}
 		} else {
 			temp.style.marginTop = parseInt(((style.marginTop && style.marginTop != 'auto') ? parseInt(style.marginTop) : 0) + ((w - h)/2)) + 'px';
