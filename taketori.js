@@ -529,23 +529,23 @@ Taketori.prototype = {
 				}
 			}
 		}
-		if (style.borderLeftWidth) temp.style.borderTopWidth = style.borderLeftWidth;
-		if (style.borderTopWidth) temp.style.borderRightWidth = style.borderTopWidth;
-		if (style.borderRightWidth) temp.style.borderBottomWidth = style.borderRightWidth;
-		if (style.borderBottomWidth) temp.style.borderLeftWidth = style.borderBottomWidth;
-		if (style.borderLeftColor) temp.style.borderTopColor = style.borderLeftColor;
-		if (style.borderTopColor) temp.style.borderRightColor = style.borderTopColor;
-		if (style.borderRightColor) temp.style.borderBottomColor = style.borderRightColor;
-		if (style.borderBottomColor) temp.style.borderLeftColor = style.borderBottomColor;
-		if (style.borderLeftStyle) temp.style.borderTopStyle = style.borderLeftStyle;
-		if (style.borderTopStyle) temp.style.borderRightStyle = style.borderTopStyle;
-		if (style.borderRightStyle) temp.style.borderBottomStyle = style.borderRightStyle;
-		if (style.borderBottomStyle) temp.style.borderLeftStyle = style.borderBottomStyle;
+		temp.style.borderTopWidth = style.borderLeftWidth || 0;
+		temp.style.borderRightWidth = style.borderTopWidth || 0;
+		temp.style.borderBottomWidth = style.borderRightWidth || 0;
+		temp.style.borderLeftWidth = style.borderBottomWidth || 0;
+		temp.style.borderTopColor = style.borderLeftColor || '';
+		temp.style.borderRightColor = style.borderTopColor || '';
+		temp.style.borderBottomColor = style.borderRightColor || '';
+		temp.style.borderLeftColor = style.borderBottomColor || '';
+		temp.style.borderTopStyle = style.borderLeftStyle || 'none';
+		temp.style.borderRightStyle = style.borderTopStyle || 'none';
+		temp.style.borderBottomStyle = style.borderRightStyle || 'none';
+		temp.style.borderLeftStyle = style.borderBottomStyle || 'none';
 		if (isBlock || !cssTextOnly || (this.isWritingModeReady && (!this.isMSIE || this.isMSIE < 8))) {
-			if (style.paddingLeft) temp.style.paddingTop = style.paddingLeft;
-			if (style.paddingTop) temp.style.paddingRight = style.paddingTop;
-			if (style.paddingRight) temp.style.paddingBottom = style.paddingRight;
-			if (style.paddingBottom) temp.style.paddingLeft = style.paddingBottom;
+			temp.style.paddingTop = style.paddingLeft || 0;
+			temp.style.paddingRight = style.paddingTop || 0;
+			temp.style.paddingBottom = style.paddingRight || 0;
+			temp.style.paddingLeft = style.paddingBottom || 0;
 		}
 		if (this.isWritingModeReady) {
 			if (isBlock && cssTextOnly) {
@@ -559,10 +559,10 @@ Taketori.prototype = {
 				temp.style.backgroundPosition = RegExp.$2 + ' ' + RegExp.$1 + ';';
 			}
 			if (isBlock || !cssTextOnly || !this.isMSIE || this.isMSIE != 8) {
-				if (style.marginLeft) temp.style.marginTop = style.marginLeft;
-				if (style.marginTop) temp.style.marginRight = style.marginTop;
-				if (style.marginRight) temp.style.marginBottom = style.marginRight;
-				if (style.marginBottom) temp.style.marginLeft = style.marginBottom;
+				temp.style.marginTop = style.marginLeft || 0;
+				temp.style.marginRight = style.marginTop || 0;
+				temp.style.marginBottom = style.marginRight || 0;
+				temp.style.marginLeft = style.marginBottom || 0;
 			}
 		} else {
 			temp.style.marginTop = parseInt(((style.marginTop && style.marginTop != 'auto') ? parseInt(style.marginTop) : 0) + ((w - h)/2)) + 'px';
