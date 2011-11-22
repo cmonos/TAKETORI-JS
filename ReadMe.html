@@ -185,6 +185,8 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 	<dt>Opera で日本語文字列のみおかしな場所に表示されます。</dt>
 	<dd>おかしな場所に表示される文字列を含む要素に「position: relative」を設定すると期待通り表示されることが多いようです。</dd>
 	<dd>Windows 版 Chrome の縦書き(-webkit-writing-mode: vertical-rl)は、現在のところ「@ＭＳ 明朝」でのみ可能となっているようです。将来のバージョンで InternetExplorer 同様「@」なしでも縦書き表示となることを期待しましょう。Mac 版 Chrome ではどんなフォントでも問題なく縦書きになります。</dd>
+	<dt>InternetExplorer9 でルビのふられた文字列が横書きになってしまいます。</dt>
+	<dd>InternetExplorer9 のバグです。互換モードを指定すると回避できます。<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" &gt;</code></pre></dd>
 	<dt>使用サンプルはありますか？</dt>
 	<dd><a href="http://cmonos.com/" target="_blank">CMONOS.JP サンプルサイト</a>の「<a href="http://cmonos.com/sample1/noveljs/" target="_blank">サンプル2/縦書きで読む(竹取JS版)</a>」をご覧ください。</dd>
 	<dt>表示されるまで時間がかかり過ぎます。</dt>
@@ -206,6 +208,11 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2011年11月22日 ver1.2.4</dt><dd>
+		<ul>
+			<li>InternetExplorer9 で margin と padding が回転してしまう不具合を修正しました。</li>
+		</ul>
+	</dd>
 	<dt>2011年11月15日 ver1.2.3</dt><dd>
 		<ul>
 			<li>WebKit 系ブラウザで background-position が回転しない不具合を修正しました。</li>
