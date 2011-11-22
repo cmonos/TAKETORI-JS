@@ -541,7 +541,7 @@ Taketori.prototype = {
 		if (style.borderTopStyle) temp.style.borderRightStyle = style.borderTopStyle;
 		if (style.borderRightStyle) temp.style.borderBottomStyle = style.borderRightStyle;
 		if (style.borderBottomStyle) temp.style.borderLeftStyle = style.borderBottomStyle;
-		if (isBlock || !cssTextOnly || (this.isWritingModeReady && (!this.isMSIE || this.isMSIE != 8))) {
+		if (isBlock || !cssTextOnly || (this.isWritingModeReady && (!this.isMSIE || this.isMSIE < 8))) {
 			if (style.paddingLeft) temp.style.paddingTop = style.paddingLeft;
 			if (style.paddingTop) temp.style.paddingRight = style.paddingTop;
 			if (style.paddingRight) temp.style.paddingBottom = style.paddingRight;
