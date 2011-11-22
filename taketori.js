@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.3
+ * Version: 1.2.4
  * Lisence: MIT Lisence
- * Last-Modified: 2011-11-15
+ * Last-Modified: 2011-11-22
  */
 
 
@@ -149,7 +149,8 @@ TaketoriTool.prototype = {
 
 var Taketori = function () {};
 Taketori.prototype = {
-	isMSIE : ((navigator.appVersion.search(/MSIE/) != -1) ? ((document.documentMode && document.documentMode > 7) ? 2 : 1) : 0),
+	isMSIE : ((navigator.appVersion.search(/MSIE/) != -1) ? ((document.documentMode) ? document.documentMode : 5) : 0),
+	atSignFontRequired : ((navigator.userAgent.search(/Chrome/i) != -1 && navigator.userAgent.search(/Windows/i) != -1) ? true : false),
 	isWritingModeReady : ((
 							navigator.appVersion.search(/MSIE/) != -1
 						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
@@ -540,7 +541,7 @@ Taketori.prototype = {
 		if (style.borderTopStyle) temp.style.borderRightStyle = style.borderTopStyle;
 		if (style.borderRightStyle) temp.style.borderBottomStyle = style.borderRightStyle;
 		if (style.borderBottomStyle) temp.style.borderLeftStyle = style.borderBottomStyle;
-		if (isBlock || !cssTextOnly || (this.isWritingModeReady && (!this.isMSIE || this.isMSIE == 1))) {
+		if (isBlock || !cssTextOnly || (this.isWritingModeReady && (!this.isMSIE || this.isMSIE != 8))) {
 			if (style.paddingLeft) temp.style.paddingTop = style.paddingLeft;
 			if (style.paddingTop) temp.style.paddingRight = style.paddingTop;
 			if (style.paddingRight) temp.style.paddingBottom = style.paddingRight;
@@ -557,7 +558,7 @@ Taketori.prototype = {
 			} else if (style.backgroundPosition && style.backgroundPosition.search(/(\S+)\s+(\S)/) != -1) {
 				temp.style.backgroundPosition = RegExp.$2 + ' ' + RegExp.$1 + ';';
 			}
-			if (isBlock || !cssTextOnly || !this.isMSIE || this.isMSIE == 1) {
+			if (isBlock || !cssTextOnly || !this.isMSIE || this.isMSIE != 8) {
 				if (style.marginLeft) temp.style.marginTop = style.marginLeft;
 				if (style.marginTop) temp.style.marginRight = style.marginTop;
 				if (style.marginRight) temp.style.marginBottom = style.marginRight;
@@ -976,6 +977,7 @@ Taketori.prototype = {
 		if (this.rubyDisabled) className += ' taketori-ruby-disabled';
 		if (!this.isTextEmphasisReady) className += ' taketori-text-emphasis-disabled';
 		if (this.process.currentConfig.fontFamily) className += (
+			(this.atSignFontRequired) ? ' taketori-atsign' : 
 			(this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : 
 			(this.process.currentConfig.fontFamily == 'cursive') ? ' taketori-cursive' : 
 			(this.process.currentConfig.fontFamily == 'kai') ? ' taketori-kai' : 
@@ -1054,7 +1056,7 @@ Taketori.prototype = {
 						return;
 					} else if (tag == '!') {
 						return;
-					} else if (this.isIncludedIn(['br','input','select','option'],tag) || (this.isMSIE && this.isMSIE == 1 && tag == 'table')) {
+					} else if (this.isIncludedIn(['br','input','select','option'],tag) || (this.isMSIE && this.isMSIE < 8 && tag == 'table')) {
 						this.appendHTML(this.outerHTML(thisNode));
 						return;
 					}
@@ -1096,7 +1098,7 @@ Taketori.prototype = {
 					} else if (this.isWritingModeReady && !this.isIncludedIn(['table','caption','thead','tbody','tr','td','th','tfoot'],tag)) {
 						cssText += this.counterClockwiseRotatedOuterHTML(thisNode,nodeStyle,true)
 					}
-					if (!this.process.ltr && this.isMSIE != 1) {
+					if (!this.process.ltr && this.isMSIE > 7) {
 						if (tag == 'li' && this.process.listStyleType && this.process.listStyleType[this.process.listStyleType.length-1] != '') {
 							attrText += ' data-marker="'+this.getListMarkerText()+'"';
 						}
