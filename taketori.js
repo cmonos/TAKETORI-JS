@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.4
+ * Version: 1.2.5
  * Lisence: MIT Lisence
- * Last-Modified: 2011-11-22
+ * Last-Modified: 2011-11-23
  */
 
 
@@ -1098,7 +1098,7 @@ Taketori.prototype = {
 					} else if (this.isWritingModeReady && !this.isIncludedIn(['table','caption','thead','tbody','tr','td','th','tfoot'],tag)) {
 						cssText += this.counterClockwiseRotatedOuterHTML(thisNode,nodeStyle,true)
 					}
-					if (!this.process.ltr && this.isMSIE > 7) {
+					if (!this.process.ltr && (!this.isMSIE || this.isMSIE > 7)) {
 						if (tag == 'li' && this.process.listStyleType && this.process.listStyleType[this.process.listStyleType.length-1] != '') {
 							attrText += ' data-marker="'+this.getListMarkerText()+'"';
 						}
