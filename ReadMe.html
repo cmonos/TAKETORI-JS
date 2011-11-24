@@ -184,7 +184,8 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 	<dd>InternetExplorer 以外の環境では「text-decoration」を疑似的に再現しています。うまく表示できない場合は、「text-decoration:none」とすることをおすすめします。</dd>
 	<dt>Opera で日本語文字列のみおかしな場所に表示されます。</dt>
 	<dd>おかしな場所に表示される文字列を含む要素に「position: relative」を設定すると期待通り表示されることが多いようです。</dd>
-	<dd>Windows 版 Chrome の縦書き(-webkit-writing-mode: vertical-rl)は、現在のところ「@ＭＳ 明朝」でのみ可能となっているようです。将来のバージョンで InternetExplorer 同様「@」なしでも縦書き表示となることを期待しましょう。Mac 版 Chrome ではどんなフォントでも問題なく縦書きになります。</dd>
+	<dt>Windows + Chrome/Safari で文字が横倒しになってしまいます。</dt>
+	<dd>Windows 版 Chrome/Safari の縦書き(-webkit-writing-mode: vertical-rl)は、現在のところ「@ＭＳ 明朝」でのみ可能となっているようです。将来のバージョンで InternetExplorer 同様「@」なしでも縦書き表示となることを期待しましょう。Mac 版 Chrome/Safari ではどんなフォントでも問題なく縦書きになります。</dd>
 	<dt>InternetExplorer9 でルビのふられた文字列が横書きになってしまいます。</dt>
 	<dd>InternetExplorer9 のバグです。互換モードを指定すると回避できます。<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=8" &gt;</code></pre></dd>
 	<dt>使用サンプルはありますか？</dt>
@@ -208,6 +209,11 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2011年11月24日 ver1.2.6</dt><dd>
+		<ul>
+			<li>Windows 版 Safari でフォントが横倒しになる不具合を修正しました。</li>
+		</ul>
+	</dd>
 	<dt>2011年11月23日 ver1.2.5</dt><dd>
 		<ul>
 			<li>IE8-9 以外で圏点にならない不具合を修正しました。</li>
