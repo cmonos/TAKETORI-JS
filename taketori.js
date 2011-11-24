@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.5
+ * Version: 1.2.6
  * Lisence: MIT Lisence
- * Last-Modified: 2011-11-23
+ * Last-Modified: 2011-11-24
  */
 
 
@@ -150,7 +150,6 @@ TaketoriTool.prototype = {
 var Taketori = function () {};
 Taketori.prototype = {
 	isMSIE : ((navigator.appVersion.search(/MSIE/) != -1) ? ((document.documentMode) ? document.documentMode : 5) : 0),
-	atSignFontRequired : ((navigator.userAgent.search(/Chrome/i) != -1 && navigator.userAgent.search(/Windows/i) != -1) ? true : false),
 	isWritingModeReady : ((
 							navigator.appVersion.search(/MSIE/) != -1
 						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
@@ -976,8 +975,9 @@ Taketori.prototype = {
 		var className = (this.isWritingModeReady) ? 'taketori-writingmode-ttb' : 'taketori-ttb';
 		if (this.rubyDisabled) className += ' taketori-ruby-disabled';
 		if (!this.isTextEmphasisReady) className += ' taketori-text-emphasis-disabled';
-		if (this.process.currentConfig.fontFamily) className += (
-			(this.atSignFontRequired) ? ' taketori-atsign' : 
+		className += (
+			(this.isWritingModeReady && navigator.userAgent.search(/WebKit/i) != -1 && navigator.userAgent.search(/Windows/i) != -1) ? ' taketori-atsign' : 
+			(!this.process.currentConfig.fontFamily) ? ' taketori-serif' : 
 			(this.process.currentConfig.fontFamily == 'sans-serif') ? ' taketori-sans-serif' : 
 			(this.process.currentConfig.fontFamily == 'cursive') ? ' taketori-cursive' : 
 			(this.process.currentConfig.fontFamily == 'kai') ? ' taketori-kai' : 
