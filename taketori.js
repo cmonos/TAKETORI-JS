@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.6
+ * Version: 1.2.7
  * Lisence: MIT Lisence
- * Last-Modified: 2011-11-24
+ * Last-Modified: 2011-12-09
  */
 
 
@@ -1208,7 +1208,7 @@ Taketori.prototype = {
 							taketori.process.latin = 0;
 						}
 						if (taketori.process.noCJK == 0) w = '<span class="nocjk notcy">' + w;
-						taketori.process.noCJK++;
+						if (!this.isTextEmphasisReady) taketori.process.noCJK++;
 					}
 					if (!taketori.process.isBreakable || (count > 1 && taketori.isNoBreak(taketori.process.width + (count * taketori.process.roughFormula) + taketori.process.lineHeight))) {
 						taketori.process.columnHTML += w;
