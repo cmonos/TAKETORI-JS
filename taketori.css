@@ -341,8 +341,7 @@
   -ms-writing-mode: lr-tb;
   /writing-mode: lr-tb;
   _writing-mode: lr-tb;
-  margin-left: -0.2em\9;
-  *margin-left: 0\9;
+  vertical-align: middle\9;
 }
 
 .taketori-writingmode-ttb .underline {
