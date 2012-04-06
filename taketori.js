@@ -706,6 +706,21 @@ Taketori.prototype = {
 		return this;
 	},
 
+	clearAll : function () {
+		if (this.isLegacy) return this;
+		if (!this.config.cookieDomain) this.config.cookieDomain = document.domain;
+		if (!this.config.cookiePath) this.config.cookiePath = '/';
+		if (!this.ttbDisabled) {
+			this.setCookie('TTB_DISABLED','true');
+			this.ttbDisabled = true;
+		}
+		for(var i=0; i<this.targetElements.length; i++) {
+			var element = this.targetElements[i];
+			this.toggle(element,true,true,true);
+		}
+		return this;
+	},
+
 	appendTarget : function (element) {
 		if (this.isVerticalTextElement(element)) return;
 		if (!this.targetElements) {
@@ -1544,7 +1559,7 @@ Taketori.prototype = {
 		}
 	},
 
-	toggle : function (element,ttbDisabled,keep) {
+	toggle : function (element,ttbDisabled,keepTargets,cacheDisabled) {
 		if (this.isLegacy || this.isVerticalTextElement(element) || (ttbDisabled != null && ((ttbDisabled && (!element.taketori || !element.taketori.ttb)) || ((!ttbDisabled && element.taketori && element.taketori.ttb))))) return this;
 		this.init();
 		if (element.taketori && element.taketori.alt && (element.taketori.ttb || (element.clientWidth == element.taketori.clientWidth && element.taketori.windowHeight == this.windowHeight))) {
@@ -1554,10 +1569,10 @@ Taketori.prototype = {
 				this.removeTaketoriClassName(element);
 			} else {
 				this.setTaketoriClassName(element);
-				keep = true;
+				keepTargets = true;
 			}
-			if (keep) {
-				element.taketori.alt = (this.config.cacheDisabled && element.taketori.ttb) ? null : alt;
+			if (keepTargets) {
+				element.taketori.alt = ((cacheDisabled || this.config.cacheDisabled) && element.taketori.ttb) ? null : alt;
 				element.taketori.ttb = (element.taketori.ttb) ? false : true;
 				element.taketori.clientWidth = element.clientWidth;
 				element.taketori.windowHeight = this.windowHeight;
@@ -1570,5 +1585,9 @@ Taketori.prototype = {
 			this.make(element,false);
 		}
 		return this;
+	},
+
+	clear : function (element) {
+		this.toggle(element,true,true,true);
 	}
 }
