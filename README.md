@@ -15,11 +15,6 @@ Chinese, Japanese, Korean
 ###License
 MIT License
 
-Related Web Service (CGI)
----------------
-http://taketori.org/
-(note: This CGI script is NOT "MIT License".)
-
 How To Use
 ---------------
 
@@ -66,6 +61,8 @@ multiColumnEnabled
 gap（'em'|'px'）(=column-gap)
 
 togglable(true|false)
+
+cacheDisabled(true|false)
 
 ####Tips
 
