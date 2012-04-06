@@ -136,6 +136,16 @@ pre {
 			<dd>ダブルクリックで表示を切り替えません。</dd>
 		</dl>
 	</dd>
+	<dt>cacheDisabled</dt>
+	<dd>
+	縦書き変換済み HTML をキャッシュするかどうか設定します。
+		<dl>
+			<dt>true</dt>
+			<dd>縦書き変換済み HTML をキャッシュ<strong>しません</strong>。</dd>
+			<dt>false（初期値）</dt>
+			<dd>縦書き変換済み HTML をキャッシュします。</dd>
+		</dl>
+	</dd>
 </dl>
 <p>これら設定項目は、class 名「class="taketori-設定項目-設定値"」として個別に指定することもできます（togglable を除く）。</p>
 <pre><code>class="taketori-maxHeight-30em taketori-fontFamily-sans-serif"</code></pre>
@@ -154,8 +164,25 @@ pre {
 <p>指定したい要素のパターンが複数ある場合はカンマで区切って指定します。</p>
 <pre><code>(new Taketori()).set({fontFamily:'sans-serif',togglable:true,height:'10em'}).element('id-1','div.tategaki').toVertical();</code></pre>
 
-<h3>.toVertical(true|false) の引数について</h3>
-<p>.toVertical(true|false) の引数では画面の読み込み待ちをするかどうかを設定します。初期値は「true」（画面の読み込み待ちをする）です。ページを表示した後、ボタンなどで縦書き表示させる場合は「false」を設定してください。</p>
+<h3>関数</h3>
+<dl>
+	<dt>.toVertical(true|false)</dt>
+	<dd>縦書き変換を実行します。引数で画面の読み込み待ちをするかどうかを設定します。初期値は「true」（画面の読み込み待ちをする）です。ページを表示した後、ボタンなどで縦書き表示させる場合は「false」を設定してください。</dd>
+	<dt>.toggleAll()</dt>
+	<dd>全ての縦書き変換対象要素について、縦書き・横書きを切り替えます。</dd>
+	<dt>.toggle(element,ttbDisabled,keepTarget)</dt>
+	<dd>
+	指定された要素(element)の縦書き・横書きを切り替えます。
+		<dl>
+			<dt>element【必須】</dt>
+			<dd>要素を指定します。</dd>
+			<dt>ttbDisabled</dt>
+			<dd>必ず横書きにしたい場合、true を設定します。対象要素が縦書きの場合は縦書きを解除し、対象要素が横書きの場合は何もしません。</dd>
+			<dt>keepTarget</dt>
+			<dd>縦書きを解除しても、縦書き対象要素からは除外しない場合、true を設定します。</dd>
+		</dl>
+	</dd>
+</dl>
 
 <h3>ダブルクリックではなく切り替えボタンで表示を切り替える例</h3>
 <pre><code>&lt;div class=&quot;tategaki&quot;&gt;
@@ -209,6 +236,13 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2012年4月6日 ver1.3.0</dt><dd>
+		<ul>
+			<li>Firefox でルビがずれる不具合を修正しました。</li>
+			<li>縦書き変換中、縦書き対象要素を表示しないようにしました。</li>
+			<li>縦書き変換済み HTML をキャッシュしない cacheDisabled オプションを追加しました。</li>
+		</ul>
+	</dd>
 	<dt>2011年12月11日 ver1.2.8</dt><dd>
 		<ul>
 			<li>InternetExplorer9 の縦中横の表示を改善しました。</li>
