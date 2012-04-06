@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.2.8
+ * Version: 1.3.0
  * Lisence: MIT Lisence
- * Last-Modified: 2011-12-11
+ * Last-Modified: 2012-04-06
  */
 
 
@@ -617,7 +617,7 @@ Taketori.prototype = {
 				} else if (this.config.elements[0] == '=dblclick') {
 					setOnly = setDblClickEvent = true;
 				} else {
-					var targets = (new TaketoriTool()).element(this.config.elements).list();
+					var targets = this.document.element(this.config.elements).list();
 					this.targetElements = new Array();
 					for (var i=0; i<targets.length; i++) {
 						if (!this.isVerticalTextElement(targets[i])) {
@@ -992,11 +992,16 @@ Taketori.prototype = {
 	},
 
 	make : function(element,configReady) {
-		if (!configReady) this.setCurrentConfig(element);
-		this.makeClipboard(element);
-		this.parse(element,true);
-		this.complement(element);
-		this.removeClipboard();
+		this.document.element(element).addClassName('taketori-in-progress');
+		var taketori = this;
+		setTimeout( function () {
+			if (!configReady) taketori.setCurrentConfig(element);
+			taketori.makeClipboard(element);
+			taketori.parse(element,true);
+			taketori.complement(element);
+			taketori.removeClipboard();
+			taketori.document.element(element).removeClassName('taketori-in-progress');
+		},120);
 	},
 
 	isSkipClass : function (element) {
@@ -1552,8 +1557,8 @@ Taketori.prototype = {
 				keep = true;
 			}
 			if (keep) {
+				element.taketori.alt = (this.config.cacheDisabled && element.taketori.ttb) ? null : alt;
 				element.taketori.ttb = (element.taketori.ttb) ? false : true;
-				element.taketori.alt = alt;
 				element.taketori.clientWidth = element.clientWidth;
 				element.taketori.windowHeight = this.windowHeight;
 			} else {
