@@ -170,16 +170,26 @@ pre {
 	<dd>縦書き変換を実行します。引数で画面の読み込み待ちをするかどうかを設定します。初期値は「true」（画面の読み込み待ちをする）です。ページを表示した後、ボタンなどで縦書き表示させる場合は「false」を設定してください。</dd>
 	<dt>.toggleAll()</dt>
 	<dd>全ての縦書き変換対象要素について、縦書き・横書きを切り替えます。</dd>
-	<dt>.toggle(element,ttbDisabled,keepTarget)</dt>
+	<dt>.toggle(element,ttbDisabled,keepTargets)</dt>
 	<dd>
 	指定された要素(element)の縦書き・横書きを切り替えます。
 		<dl>
 			<dt>element【必須】</dt>
 			<dd>要素を指定します。</dd>
 			<dt>ttbDisabled</dt>
-			<dd>必ず横書きにしたい場合、true を設定します。対象要素が縦書きの場合は縦書きを解除し、対象要素が横書きの場合は何もしません。</dd>
-			<dt>keepTarget</dt>
-			<dd>縦書きを解除しても、縦書き対象要素からは除外しない場合、true を設定します。</dd>
+			<dd>必ず横書きにしたい場合、「true」を設定します。対象要素が縦書きの場合は縦書きを解除し、対象要素が横書きの場合は何もしません。</dd>
+			<dt>keepTargets</dt>
+			<dd>縦書きを解除しても、縦書き対象要素からは除外しない場合、「true」を設定します。</dd>
+		</dl>
+	</dd>
+	<dt>.clearAll()</dt>
+	<dd>全ての縦書き変換対象要素について、縦書きを横書きに戻し、縦書き済み HTML のキャッシュを消去します。</dd>
+	<dt>.clear(element)</dt>
+	<dd>
+	指定された要素(element)を横書きに戻し、縦書き済み HTML のキャッシュを消去します。
+		<dl>
+			<dt>element【必須】</dt>
+			<dd>要素を指定します。</dd>
 		</dl>
 	</dd>
 </dl>
