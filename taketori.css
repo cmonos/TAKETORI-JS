@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .taketori-sans-serif-ja-jp {
-  font-family: 'Lucida Grande','Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','HiraKakuProN-W3',Verdana,'メイリオ','Meiryo','ＭＳ ゴシック','MS Gothic',Osaka,arial,helvetica,sans-serif !important;
+  font-family: 'Lucida Grande','Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','HiraKakuProN-W3','メイリオ','Meiryo','ＭＳ ゴシック','MS Gothic',Osaka,Verdana,arial,helvetica,sans-serif !important;
 }
 
 .taketori-sans-serif-zh-tw {
@@ -308,20 +308,18 @@
 .taketori-ruby-disabled ruby {
   display: -moz-inline-block;
   display: inline-block;
-}
-
-.taketori-ruby-disabled .taketori-multi-column ruby {
   position: relative;
 }
 .taketori-ruby-disabled ruby rp {
   display: none;
 }
 .taketori-ruby-disabled ruby rt {
-  display: -moz-inline-block;
-  display: inline-block;
-  margin: -3em 0 0 0;
+  display: block;
+  margin: -1em 0 0 0;
   font-size: 0.5em;
   position: absolute;
+  top: 0;
+  left: 0;
   vertical-align: bottom;
 }
 
@@ -397,4 +395,12 @@
   vertical-align: text-bottom;
 }
 
+.taketori-in-progress {
+  opacity: 0 !important;
+  -moz-opacity: 0 !important;
+  -webkit-opacity: 0 !important;
+  -o-opacity: 0 !important;
+  -ms-filter: "alpha(opacity=0)" !important;
+  filter: alpha(opacity=0) !important;
+}
 
