@@ -39,7 +39,7 @@
 
 .taketori-ttb { overflow: hidden;  position: relative; }
 .taketori-ttb span { cursor: vertical-text; }
-.taketori-ttb a span { cursor: pointer; !important }
+.taketori-ttb a span { cursor: pointer !important; }
 
 .taketori-ttb .taketori-col {
   -moz-transform-origin: left bottom;
@@ -182,7 +182,7 @@
   line-height: 1;
   margin: 0.25em -1px 0.25em -1px;
 }
-.taketori-ttb .overline span.cho-on {
+.taketori-ttb .bothline span.cho-on {
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-left: none;
@@ -237,6 +237,13 @@
   -webkit-transform:skew(20deg,0);
   -o-transform:skew(20deg,0);
   transform:skew(20deg,0);
+}
+.taketori-ttb .italic span.cho-on {
+  -moz-transform: scale(1.0,-1.0);
+  -webkit-transform: scale(1.0,-1.0);
+  -o-transform: scale(1.0,-1.0);
+  transform: scale(1.0,-1.0);
+  vertical-align: middle;
 }
 
 .taketori-ttb strong {
