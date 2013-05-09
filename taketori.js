@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
- * Copyright 2010-2011 CMONOS. Co,Ltd (http://cmonos.jp)
+ * Copyright 2010-2013 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.3.0
+ * Version: 1.3.1
  * Lisence: MIT Lisence
- * Last-Modified: 2012-04-06
+ * Last-Modified: 2013-05-09
  */
 
 
@@ -1404,7 +1404,7 @@ Taketori.prototype = {
 		} else if (w.search(/^[\u3009\u300B\u300D\u300F\u3011\u3015\u3017\u3019\uFF09\uFF5D\uFF60]$/) != -1) {
 			this.process.kinsoku = true;
 			return 'kakko';
-		} else if (w.search(/^[\u3008\u300A\u300C\u300E\u3010\u3014\u3015\u3018\uFF08\uFF5B\uFF5F]$/) != -1) {
+		} else if (w.search(/^[\u3008\u300A\u300C\u300E\u3010\u3014\u3016\u3018\uFF08\uFF5B\uFF5F]$/) != -1) {
 			return 'kakko';
 		} else if (w.search(/^[\uFF01\uFF1A\uFF1B\uFF1F]$/) != -1) { // use "search" for IE5.5.
 			this.process.kinsoku = true;
