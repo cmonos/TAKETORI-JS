@@ -246,6 +246,11 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2013年6月5日 ver1.3.2</dt><dd>
+		<ul>
+			<li>Retina Display と Chrome 〜ver27 の組み合わせで縦組を指定した文字が消える不具合を修正しました。将来的に修正されることを信じて ver31 以降は「-webkit-writing-mode」を利用するようにしてあります。バージョンによる切り替えは 156行目「parseInt(RegExp.$1) > 30)」で行っています。「30」を書き換えると切り替えるバージョンを変更できます。（多々良直治さんご指摘、テストのご協力ありがとうございます！）</li>
+		</ul>
+	</dd>
 	<dt>2013年5月9日 ver1.3.1</dt><dd>
 		<ul>
 			<li>taketori.js 1407行目でかっこ開始文字の指定に誤りがあったのを修正しました。（<a href="http://cmonos.jp/cgi/feedback/start.cgi" target="_blank">株式会社CMONOS フィードバックフォーム</a>からのご指摘ありがとうございます！）</li>
