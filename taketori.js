@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2013 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.3.2
+ * Version: 1.3.3
  * Lisence: MIT Lisence
- * Last-Modified: 2013-06-05
+ * Last-Modified: 2013-09-18
  */
 
 
@@ -153,7 +153,7 @@ Taketori.prototype = {
 	isWritingModeReady : ((
 							navigator.appVersion.search(/MSIE/) != -1
 						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
-						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && (!window.devicePixelRatio || window.devicePixelRatio < 2 || navigator.userAgent.search(/Chrome\/([0-9]+)/) == -1 || parseInt(RegExp.$1) > 30))
+						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && (navigator.userAgent.search(/ Android ([0-9]+\.?[0-9]*).* AppleWebKit.* Mobile/i) == -1 || parseFloat(RegExp.$1) > 4.4) && (!window.devicePixelRatio || window.devicePixelRatio < 2 || navigator.userAgent.search(/Chrome\/([0-9]+)/) == -1 || parseInt(RegExp.$1) > 30))
 						 || typeof (document.createElement('div')).style.OWritingMode != 'undefined'
 						 ) ? true : false),
 	isMultiColumnReady : ((
