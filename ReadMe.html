@@ -246,6 +246,11 @@ taketori.document.element(&#39;toggle&#39;).addEventListener(&#39;click&#39;,fun
 <h2>バージョン履歴</h2>
 
 <dl class="item">
+	<dt>2013年9月19日 ver1.3.4</dt><dd>
+		<ul>
+			<li>Android 4.1 で縦書きの不具合が修正されているそうなので、Android 4.0.x のみ90度回転方式となるようにしました。</li>
+		</ul>
+	</dd>
 	<dt>2013年9月18日 ver1.3.3</dt><dd>
 		<ul>
 			<li>Android 携帯で縦書きにならずテキストが横倒しになる不具合を修正しました。上記環境では90度回転方式の縦書きとなります。これは Android の WebKit 実装バグですが、将来的に修正されることを信じて Android 4.5 以降は「-webkit-writing-mode」を利用するようにしてあります。バージョンによる切り替えは 156行目「parseFloat(RegExp.$1) > 4.4)」で行っています。「4.4」を書き換えると切り替えるバージョンを変更できます。</li>
