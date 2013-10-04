@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2013 CMONOS. Co,Ltd (http://cmonos.jp)
  *
- * Version: 1.3.4
+ * Version: 1.3.5
  * Lisence: MIT Lisence
- * Last-Modified: 2013-09-19
+ * Last-Modified: 2013-10-04
  */
 
 
@@ -153,7 +153,7 @@ Taketori.prototype = {
 	isWritingModeReady : ((
 							navigator.appVersion.search(/MSIE/) != -1
 						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
-						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && (navigator.userAgent.search(/ Android ([0-9]+\.?[0-9]*).* AppleWebKit.* Mobile/i) == -1 || parseFloat(RegExp.$1) > 4) && (!window.devicePixelRatio || window.devicePixelRatio < 2 || navigator.userAgent.search(/Chrome\/([0-9]+)/) == -1 || parseInt(RegExp.$1) > 30))
+						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && (!window.devicePixelRatio || window.devicePixelRatio < 2 || navigator.userAgent.search(/Chrome\/([0-9]+)/) == -1 || parseInt(RegExp.$1) > 30))
 						 || typeof (document.createElement('div')).style.OWritingMode != 'undefined'
 						 ) ? true : false),
 	isMultiColumnReady : ((
@@ -176,6 +176,7 @@ Taketori.prototype = {
 						 || typeof (document.createElement('div')).style.msTextEmphasisStyle != 'undefined'
 						 || typeof (document.createElement('div')).style.textEmphasisStyle != 'undefined'
 						 ) ? true : false),
+	supportTouch : ((((!window.navigator.msPointerEnabled && !window.navigator.pointerEnabled) || navigator.userAgent.search(/iphone|ipad|android/i) != -1) && ('createTouch' in document || 'ontouchstart' in document)) ? true : false),
 
 	document : (new TaketoriTool()),
 
@@ -627,10 +628,31 @@ Taketori.prototype = {
 
 				}
 			}
+			var event_handler = (this.supportTouch) ? 'touchstart' : 'dblclick';
 			if (setDblClickEvent) {
 				if (!this.toggleEventAttached) {
-					this.document.element(document.body).addEventListener('dblclick',function(e) {
-						taketori.toggle(taketori.lookUpBlockElements(e.target || event.target || event.srcElement));
+					this.document.element(document.body).addEventListener(event_handler,function(e) {
+						e = e || event;
+						if (taketori.supportTouch && e.touches) {
+							var clicked = (taketori.dblClickTimer) ? true : false;
+							e = e.touches[0];
+							if (clicked) {
+								clearTimeout(taketori.dblClickTimer);
+								delete taketori.dblClickTimer;
+								if (Math.abs(taketori.touchX - e.pageX) > 50 || Math.abs(taketori.touchY - e.pageY) > 50) clicked = false;
+							}
+							taketori.touchX = e.pageX;
+							taketori.touchY = e.pageY;
+							if (!clicked) {
+								taketori.dblClickTimer = setTimeout(function () {
+									if (taketori.dblClickTimer) delete taketori.dblClickTimer;
+									if (taketori.touchX) delete taketori.touchX;
+									if (taketori.touchY) delete taketori.touchY;
+								},500);
+								return;
+							}
+						}
+						taketori.toggle(taketori.lookUpBlockElements(e.target || e.srcElement));
 						taketori.document.stopPropagation(e);
 						taketori.document.preventDefault(e);
 					});
@@ -653,7 +675,27 @@ Taketori.prototype = {
 					var element = this.targetElements[i];
 					if (!element.taketori) element.taketori = {};
 					if (!element.taketori.toggleEventAttached) {
-						this.document.element(element).addEventListener('dblclick',function(e) {
+						this.document.element(element).addEventListener(event_handler,function(e) {
+							e = e || event;
+							if (taketori.supportTouch && e.touches) {
+								var clicked = (element.taketori.dblClickTimer) ? true : false;
+								e = e.touches[0];
+								if (clicked) {
+									clearTimeout(element.taketori.dblClickTimer);
+									delete element.taketori.dblClickTimer;
+									if (Math.abs(element.taketori.touchX - e.pageX) > 50 || Math.abs(element.taketori.touchY - e.pageY) > 50) clicked = false;
+								}
+								element.taketori.touchX = e.pageX;
+								element.taketori.touchY = e.pageY;
+								if (!clicked) {
+									element.taketori.dblClickTimer = setTimeout(function () {
+										if (element.taketori.dblClickTimer) delete element.taketori.dblClickTimer;
+										if (element.taketori.touchX) delete element.taketori.touchX;
+										if (element.taketori.touchY) delete element.taketori.touchY;
+									},500);
+									return;
+								}
+							}
 							taketori.document.stopPropagation(e);
 							taketori.document.preventDefault(e);
 							if (taketori.ttbDisabled) {
