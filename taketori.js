@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
- * Copyright 2010-2013 CMONOS. Co,Ltd (http://cmonos.jp)
+ * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.3.5
+ * Version: 1.3.7
  * Lisence: MIT Lisence
- * Last-Modified: 2013-10-04
+ * Last-Modified: 2015-01-09
  */
 
 
@@ -149,9 +149,9 @@ TaketoriTool.prototype = {
 
 var Taketori = function () {};
 Taketori.prototype = {
-	isMSIE : ((navigator.appVersion.search(/MSIE/) != -1) ? ((document.documentMode) ? document.documentMode : 5) : 0),
+	isMSIE : ((document.documentMode) ? document.documentMode : (navigator.appVersion.search(/MSIE/) != -1) ? 5 : 0),
 	isWritingModeReady : ((
-							navigator.appVersion.search(/MSIE/) != -1
+							navigator.appVersion.search(/MSIE/) != -1 || document.documentMode
 						 || typeof (document.createElement('div')).style.MozWritingMode != 'undefined'
 						 || (typeof (document.createElement('div')).style.webkitWritingMode != 'undefined' && (!window.devicePixelRatio || window.devicePixelRatio < 2 || navigator.userAgent.search(/Chrome\/([0-9]+)/) == -1 || parseInt(RegExp.$1) > 30))
 						 || typeof (document.createElement('div')).style.OWritingMode != 'undefined'
@@ -588,7 +588,7 @@ Taketori.prototype = {
 		if (this.isWritingModeReady) {
 			return 'width:' + h + 'px;'
 				 + 'height:' + w + 'px;'
-				 + ((g) ? ((!o) ? 'padding-bottom:' : 'margin-bottom:') + g + 'px;' : '')
+				 + ((g) ? ((this.isMSIE && this.isMSIE == 9) ? (!o) ? 'padding-right:' : 'margin-right:' : (!o) ? 'padding-bottom:' : 'margin-bottom:') + g + 'px;' : '')
 				 + ((!o) ? 'position:relative;overflow:auto;overflow-x:auto;overflow-y:hidden;' : '');
 		} else {
 			return 'width:' + w + 'px;'
