@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.3.7
+ * Version: 1.3.8
  * Lisence: MIT Lisence
- * Last-Modified: 2015-01-09
+ * Last-Modified: 2015-01-30
  */
 
 
@@ -997,11 +997,18 @@ Taketori.prototype = {
 		element.style.MozColumnWidth = this.process.config.height + 'px';
 		element.style.webkitColumnWidth = this.process.config.height + 'px';
 		element.style.OColumnWidth = this.process.config.height + 'px';
+		element.style.msColumnWidth = this.process.config.height + 'px';
 		element.style.columnWidth = this.process.config.height + 'px';
 		element.style.MozColumnGap = this.process.config.gap + 'px';
 		element.style.webkitColumnGap = this.process.config.gap + 'px';
 		element.style.OColumnGap = this.process.config.gap + 'px';
+		element.style.msColumnGap = this.process.config.gap + 'px';
 		element.style.columnGap = this.process.config.gap + 'px';
+		element.style.MozColumnFill = 'auto';
+		element.style.webkitColumnFill = 'auto';
+		element.style.OColumnFill = 'auto';
+		element.style.msColumnFill = 'auto';
+		element.style.columnFill = 'auto';
 	},
 
 	setMultiColumnWidth : function (element) {
@@ -1567,6 +1574,7 @@ Taketori.prototype = {
 								columnNode.style.MozColumnWidth = w + 'px';
 								columnNode.style.webkitColumnWidth = w + 'px';
 								columnNode.style.OColumnWidth = w + 'px';
+								columnNode.style.msColumnWidth = w + 'px';
 								columnNode.style.columnWidth = w + 'px';
 							} else {
 								if (this.isWritingModeReady) {
