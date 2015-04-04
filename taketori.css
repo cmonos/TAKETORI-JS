@@ -5,7 +5,7 @@
 }
 
 .taketori-sans-serif-zh-tw {
-  font-family: 'Heiti TC', 'LiHei Pro', '微軟正黑體', Arial, Helvetica, sans-serif !important;
+  font-family: 'Heiti TC', 'LiHei Pro', '微軟正黑體', sans-serif !important;
 }
 
 .taketori-serif-ja-jp {
@@ -13,7 +13,7 @@
 }
 
 .taketori-serif-zh-tw {
-  font-family: 'Apple LiSong', Times, 'Times New Roman', '新細明體', PMingLiu, serif !important;
+  font-family: 'Apple LiSung', PMingLiu, '新細明體', serif !important;
 }
 
 .taketori-cursive-ja-jp {
@@ -21,7 +21,7 @@
 }
 
 .taketori-cursive-zh-tw {
-  font-family: 'Apple LiSong', Times, 'Times New Roman', '新細明體', PMingLiu, serif !important;
+  font-family: 'Apple LiSung', PMingLiu, '新細明體', serif !important;
 }
 
 .taketori-kai-ja-jp {
