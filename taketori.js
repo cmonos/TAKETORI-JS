@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.3.8
+ * Version: 1.3.10
  * Lisence: MIT Lisence
- * Last-Modified: 2015-01-30
+ * Last-Modified: 2015-04-07
  */
 
 
@@ -741,9 +741,11 @@ Taketori.prototype = {
 			this.setCookie('TTB_DISABLED','true');
 			this.ttbDisabled = true;
 		}
-		for(var i=0; i<this.targetElements.length; i++) {
-			var element = this.targetElements[i];
-			this.toggle(element,this.ttbDisabled,true);
+		if (this.targetElements) {
+			for(var i=0; i<this.targetElements.length; i++) {
+				var element = this.targetElements[i];
+				this.toggle(element,this.ttbDisabled,true);
+			}
 		}
 		return this;
 	},
@@ -756,9 +758,11 @@ Taketori.prototype = {
 			this.setCookie('TTB_DISABLED','true');
 			this.ttbDisabled = true;
 		}
-		for(var i=0; i<this.targetElements.length; i++) {
-			var element = this.targetElements[i];
-			this.toggle(element,true,true,true);
+		if (this.targetElements) {
+			for(var i=0; i<this.targetElements.length; i++) {
+				var element = this.targetElements[i];
+				this.toggle(element,true,true,true);
+			}
 		}
 		return this;
 	},
@@ -834,6 +838,13 @@ Taketori.prototype = {
 			currentConfig.classNameImported = true;
 		}
 		currentConfig.lang = (currentConfig.lang) ? currentConfig.lang.toLowerCase() : TaketoriDefaultLang;
+		currentConfig.ja = null;
+		currentConfig.zh = null;
+		if (currentConfig.lang == 'ja-jp') {
+			currentConfig.ja = true;
+		} else if (currentConfig.lang.search(/^zh-/) != -1) {
+			currentConfig.zh = true;
+		}
 		this.init();
 		var contentStyle = this.getStyle(element);
 		var fontSize = this.getFontSize(contentStyle.fontSize);
@@ -1260,7 +1271,11 @@ Taketori.prototype = {
 					//CJK
 					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2460-\u24FF\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF1B\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
 						taketori.setCJK();
-						if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? ' style="margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + '>' + w + '</span>');
+						if (taketori.process.currentConfig.zh && taketori.isWritingModeReady && !taketori.process.ltr && (w == "\uFF1A" || w == "\uFF1B")) {
+							w = '<span class="tcy">' + w + '</span>';
+						} else if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) {
+							w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? ' style="margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + '>' + w + '</span>');
+						}
 						count++;
 
 					//space
@@ -1443,10 +1458,10 @@ Taketori.prototype = {
 			return "cjk cho-on";
 		} else if (w == "\u3001" || w == "\uFF0C") {
 			this.process.kinsoku = true;
-			return (this.process.currentConfig.lang == "ja-jp") ? "cjk tou-ten" : "cjk";
+			return (this.process.currentConfig.ja) ? "cjk tou-ten" : "cjk";
 		} else if (w == "\u3002" || w == "\uFF0E") {
 			this.process.kinsoku = true;
-			return (this.process.currentConfig.lang == "ja-jp") ? "cjk ku-ten" : "cjk";
+			return (this.process.currentConfig.ja) ? "cjk ku-ten" : "cjk";
 		} else if (w.search(/^[\u3041\u3043\u3045\u3047\u3049\u3083\u3085\u3087\u3063\u30A1\u30A3\u30A5\u30A7\u30A9\u30E3\u30E5\u30E7\u30C3]$/) != -1) {
 			this.process.kinsoku = true;
 			return 'cjk kogaki';
