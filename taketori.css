@@ -68,6 +68,7 @@
   -o-transform:rotate(-90deg);
   transform:rotate(-90deg);
   vertical-align: middle !important;
+  letter-spacing: 0 !important;
 }
 .taketori-ttb ruby rb, .taketori-ttb ruby rt {
   line-height: 1;
