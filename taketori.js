@@ -1266,7 +1266,8 @@ Taketori.prototype = {
 				text = this.escapeHTML(thisNode.nodeValue);
 				text = text.replace(/\uFF0F\uFF3C/g,"\u3033\u3035").replace(/\uFF3C\uFF0F/g,"\u3033\u3035").replace(/\uFF0F\u0022\uFF3C/g,"\u3034\u3035").replace(/\uFF3C\u0022\uFF0F/g,"\u3034\u3035");//kunojiten
 				text = text.replace(/\uFF61/g,"\u3002").replace(/\uFF62/g,"\u300C").replace(/\uFF63/g,"\u300D").replace(/\uFF64/g,"\u3001");//hankaku
-				text = text.replace(/([^A-Za-z0-9\.,\s])\s*([0-9\.\,\+\-]{3,}\s*[A-Za-z%]{0,2}|[0-9]\s*[A-Za-z%]{0,2}|[A-Z]+|[a-zA-Z]{1,2})(?=\s*[^A-Za-z0-9\.,\s]|$)/g,function (a,p,w) {return p + w.replace(/./g, function (c) {return String.fromCharCode(c.charCodeAt(0) + 65248)})});//hankaku->zenkaku
+				text = text.replace(/([^\w\.,\s\/@])\s*([0-9\.\,\+\-]{3,}\s*[A-Za-z%]{0,2}|[0-9]\s*[A-Za-z%]{0,2}|[A-Z]+|[a-zA-Z]{1,2})(?=\s*[^\w\.,\s\/@]|$)/g,function (a,p,w) {return p + w.replace(/./g, function (c) {return String.fromCharCode(c.charCodeAt(0) + 65248)})});//hankaku->zenkaku
+				text = text.replace(/([^\w\.,\s\/@]\s*[0-9]{2})\s*([a-zA-Z]{1,2})(?=\s*[^\w\.,\s\/@]|$)/g,function (a,p,w) {return p + w.replace(/./g, function (c) {return String.fromCharCode(c.charCodeAt(0) + 65248)})});//hankaku->zenkaku
 				var taketori = this;
 				var count = 0;
 				text.replace(/&#?\w+;|\s+|./g,function (w) {
