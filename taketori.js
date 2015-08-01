@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.4.0
+ * Version: 1.4.1
  * Lisence: MIT Lisence
- * Last-Modified: 2015-08-01
+ * Last-Modified: 2015-08-02
  */
 
 
@@ -484,15 +484,16 @@ Taketori.prototype = {
 				mw = this.getMarginSize([style.paddingTop,style.paddingBottom,style.borderTopWidth,style.borderBottomWidth]);
 				mh = this.getMarginSize([style.paddingLeft,style.paddingRight,style.borderLeftWidth,style.borderRightWidth]);
 			}
-			var w = (!isNaN(parseInt(style.width)) && parseInt(style.width) > 0) ? parseInt(style.width) : (element.width) ? element.width : (element.offsetWidth) ? element.offsetWidth - ((noRotate) ? mw : mh) : null;
-			var h = (!isNaN(parseInt(style.height)) && parseInt(style.height) > 0) ? parseInt(style.height) : (element.height) ? element.height : (element.offsetHeight) ? element.offsetHeight - ((noRotate) ? mh : mw) : null;
+			var w = (!isNaN(parseInt(style.width)) && parseInt(style.width) > 0) ? parseInt(style.width) : (element.width) ? element.width : (isBlock && element.offsetWidth) ? element.offsetWidth - ((noRotate) ? mw : mh) : null;
+			var h = (!isNaN(parseInt(style.height)) && parseInt(style.height) > 0) ? parseInt(style.height) : (element.height) ? element.height : (isBlock && element.offsetHeight) ? element.offsetHeight - ((noRotate) ? mh : mw) : null;
 			var resized = false;
 			if (!w || !h) {
+				var clone = (cssTextOnly) ? element.cloneNode(true) : temp;
 				this.makeClipboard(this.process.target,true);
-				this.clipboard.appendChild(temp);
-				w = (temp.offsetWidth) ? temp.offsetWidth - ((noRotate) ? mw : mh) : temp.clientWidth;
-				h = (temp.offsetHeight) ? temp.offsetHeight - ((noRotate) ? mh : mw) : temp.clientHeight;
-				this.clipboard.removeChild(temp);
+				this.clipboard.appendChild(clone);
+				w = (clone.offsetWidth) ? clone.offsetWidth - ((noRotate) ? mw : mh) : clone.clientWidth;
+				h = (clone.offsetHeight) ? clone.offsetHeight - ((noRotate) ? mh : mw) : clone.clientHeight;
+				this.clipboard.removeChild(clone);
 			}
 			if (!isNaN(w) && !isNaN(h)) {
 				w += mw;
@@ -1124,6 +1125,7 @@ Taketori.prototype = {
 					}
 					this.process.roughFormula = fontSize * this.process.lineHeight / this.process.lineLength;
 				}
+				this.process.letterSpacing = this.letterSpacing(nodeStyle) || 0;
 				if (!isRoot) {
 					if (this.isIncludedIn(['img','object','embed','video','audio','textarea'],tag)) {
 						this.appendHTML(this.counterClockwiseRotatedOuterHTML(thisNode,nodeStyle));
@@ -1205,7 +1207,6 @@ Taketori.prototype = {
 						if (!this.isWritingModeReady && nodeStyle.fontStyle && nodeStyle.fontStyle.toLowerCase() == 'italic' && hasChildNodes) {
 							className += ((className) ? ' ' : '') + 'italic';
 						}
-						if (!this.isWritingModeReady) this.process.letterSpacing = this.letterSpacing(nodeStyle) || 0;
 						if (nodeStyle.textDecoration && hasChildNodes) {
 							var textDecoration = nodeStyle.textDecoration.toLowerCase();
 							if (textDecoration != 'none') {
@@ -1276,9 +1277,9 @@ Taketori.prototype = {
 					if (w.search(/^[\u1100-\u11FF\u2030-\u217F\u2460-\u24FF\u2600-\u261B\u2620-\u277F\u2E80-\u2FDF\u2FF0-\u4DBF\u4E00-\u9FFF\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\uF900-\uFAFF\uFE30-\uFE4F\uFF00\uFF01\uFF03-\uFF06\uFF08-\uFF0C\uFF0E-\uFF1B\uFF1F-\uFF3D\uFF40-\uFF5B\uFF5D-\uFFEF]$/) != -1) {
 						taketori.setCJK();
 						if (taketori.process.currentConfig.zh && taketori.isWritingModeReady && !taketori.process.ltr && (w == "\uFF1A" || w == "\uFF1B")) {
-							w = '<span class="tcy">' + w + '</span>';
+							w = '<span class="tcy"' + ((taketori.process.letterSpacing) ? 'style="margin-' + ((taketori.isWritingModeReady) ? 'bottom:' : 'right:') + taketori.process.letterSpacing + 'px;"' : '') + '>' + w + '</span>';
 						} else if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) {
-							w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ' style="' + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? 'margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + ((!taketori.process.ltr && taketori.process.letterSpacing) ? 'margin-right:' + taketori.process.letterSpacing + 'px;' : '') + '">' + w + '</span>');
+							w = taketori.kinsokuShori('<span class="' + taketori.getCJKClassName(w) + '" style="' + ((taketori.process.lineMarginHeight) ? 'margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + ((taketori.process.letterSpacing) ? 'margin-right:' + taketori.process.letterSpacing + 'px;' : '') + '">' + w + '</span>');
 						}
 						count++;
 
@@ -1326,7 +1327,7 @@ Taketori.prototype = {
 
 	setCJK : function () {
 		if (this.process.noCJK > 0) {
-			this.process.columnHTML = ((this.process.noCJK == this.process.latin && this.process.latin <= 2) ? this.process.columnHTML.replace('<span class="nocjk notcy">','<span class="tcy">') : this.process.columnHTML.replace('<span class="nocjk notcy">','<span class="nocjk">')) + '</span>';
+			this.process.columnHTML = ((this.process.noCJK == this.process.latin && this.process.latin <= 2) ? this.process.columnHTML.replace('<span class="nocjk notcy">','<span class="tcy"' + ((this.process.letterSpacing) ? 'style="margin-' + ((this.isWritingModeReady) ? 'bottom:' : 'right:') + this.process.letterSpacing + 'px;"' : '') + '>') : this.process.columnHTML.replace('<span class="nocjk notcy">','<span class="nocjk">')) + '</span>';
 		}
 		this.process.latin = this.process.noCJK = 0;
 	},
@@ -1334,7 +1335,7 @@ Taketori.prototype = {
 	lineMarginHeight : function (nodeStyle) {
 		var lineHeight = nodeStyle.lineHeight;
 		var fontSize = this.getFontSize(nodeStyle.fontSize);
-		if (lineHeight.search(/\d+px/) != -1) {
+		if (lineHeight.search(/\d+px/i) != -1) {
 			return parseInt((parseInt(lineHeight) - fontSize) / 2);
 		} else if (lineHeight.search(/\d+%/) != -1) {
 			return parseInt(((parseInt(lineHeight) / 100) * fontSize - fontSize) / 2);
@@ -1344,8 +1345,10 @@ Taketori.prototype = {
 	},
 
 	letterSpacing : function (nodeStyle) {
-		var letterSpacing = nodeStyle.letterSpacing
-		if (letterSpacing.search(/\d+px/) != -1) {
+		var letterSpacing = nodeStyle.letterSpacing;
+		if (letterSpacing.search(/normal/i) != -1) {
+			return 0;
+		} else if (letterSpacing.search(/\d+px/i) != -1) {
 			return parseInt(letterSpacing);
 		} else {
 			var fontSize = this.getFontSize(nodeStyle.fontSize);
