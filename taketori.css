@@ -68,6 +68,8 @@
   -o-transform:rotate(-90deg);
   transform:rotate(-90deg);
   vertical-align: middle !important;
+}
+.taketori-ttb span.cjk, .taketori-ttb span.tcy {
   letter-spacing: 0 !important;
 }
 .taketori-ttb ruby rb, .taketori-ttb ruby rt {
@@ -350,6 +352,9 @@
   /writing-mode: lr-tb;
   _writing-mode: lr-tb;
   vertical-align: middle\9;
+}
+.taketori-writingmode-ttb span.tcy {
+  letter-spacing: 0 !important;
 }
 
 .taketori-writingmode-ttb .underline {
