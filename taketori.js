@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.3.10
+ * Version: 1.4.0
  * Lisence: MIT Lisence
- * Last-Modified: 2015-04-07
+ * Last-Modified: 2015-08-01
  */
 
 
@@ -1205,6 +1205,7 @@ Taketori.prototype = {
 						if (!this.isWritingModeReady && nodeStyle.fontStyle && nodeStyle.fontStyle.toLowerCase() == 'italic' && hasChildNodes) {
 							className += ((className) ? ' ' : '') + 'italic';
 						}
+						if (!this.isWritingModeReady) this.process.letterSpacing = this.letterSpacing(nodeStyle) || 0;
 						if (nodeStyle.textDecoration && hasChildNodes) {
 							var textDecoration = nodeStyle.textDecoration.toLowerCase();
 							if (textDecoration != 'none') {
@@ -1264,6 +1265,8 @@ Taketori.prototype = {
 			case 3:
 				text = this.escapeHTML(thisNode.nodeValue);
 				text = text.replace(/\uFF0F\uFF3C/g,"\u3033\u3035").replace(/\uFF3C\uFF0F/g,"\u3033\u3035").replace(/\uFF0F\u0022\uFF3C/g,"\u3034\u3035").replace(/\uFF3C\u0022\uFF0F/g,"\u3034\u3035");//kunojiten
+				text = text.replace(/\uFF61/g,"\u3002").replace(/\uFF62/g,"\u300C").replace(/\uFF63/g,"\u300D").replace(/\uFF64/g,"\u3001");//hankaku
+				text = text.replace(/([^A-Za-z0-9\.,\s])\s*([0-9\.\,\+\-]{3,}\s*[A-Za-z%]{0,2}|[0-9]\s*[A-Za-z%]{0,2}|[A-Z]+|[a-zA-Z]{1,2})(?=\s*[^A-Za-z0-9\.,\s]|$)/g,function (a,p,w) {return p + w.replace(/./g, function (c) {return String.fromCharCode(c.charCodeAt(0) + 65248)})});//hankaku->zenkaku
 				var taketori = this;
 				var count = 0;
 				text.replace(/&#?\w+;|\s+|./g,function (w) {
@@ -1274,7 +1277,7 @@ Taketori.prototype = {
 						if (taketori.process.currentConfig.zh && taketori.isWritingModeReady && !taketori.process.ltr && (w == "\uFF1A" || w == "\uFF1B")) {
 							w = '<span class="tcy">' + w + '</span>';
 						} else if ((!taketori.isWritingModeReady || taketori.process.kenten) && !taketori.process.ltr) {
-							w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? ' style="margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + '>' + w + '</span>');
+							w = taketori.kinsokuShori('<span' + ((!taketori.process.ltr) ? ' class="' + taketori.getCJKClassName(w) + '"' : '') + ' style="' + ((!taketori.process.ltr && taketori.process.lineMarginHeight) ? 'margin-top:' + taketori.process.lineMarginHeight + 'px;margin-bottom:' + taketori.process.lineMarginHeight + 'px;"' : '') + ((!taketori.process.ltr && taketori.process.letterSpacing) ? 'margin-right:' + taketori.process.letterSpacing + 'px;' : '') + '">' + w + '</span>');
 						}
 						count++;
 
@@ -1332,8 +1335,24 @@ Taketori.prototype = {
 		var fontSize = this.getFontSize(nodeStyle.fontSize);
 		if (lineHeight.search(/\d+px/) != -1) {
 			return parseInt((parseInt(lineHeight) - fontSize) / 2);
+		} else if (lineHeight.search(/\d+%/) != -1) {
+			return parseInt(((parseInt(lineHeight) / 100) * fontSize - fontSize) / 2);
 		} else {
 			return parseInt((parseFloat(lineHeight) * fontSize - fontSize) / 2);
+		}
+	},
+
+	letterSpacing : function (nodeStyle) {
+		var letterSpacing = nodeStyle.letterSpacing
+		if (letterSpacing.search(/\d+px/) != -1) {
+			return parseInt(letterSpacing);
+		} else {
+			var fontSize = this.getFontSize(nodeStyle.fontSize);
+			if (letterSpacing.search(/\d+%/) != -1) {
+				return parseInt((parseInt(letterSpacing) / 100) * fontSize);
+			} else {
+				return parseInt(parseFloat(letterSpacing) * fontSize);
+			}
 		}
 	},
 
