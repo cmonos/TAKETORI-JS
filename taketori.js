@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.4.1
+ * Version: 1.4.2
  * Lisence: MIT Lisence
- * Last-Modified: 2015-08-02
+ * Last-Modified: 2015-08-10
  */
 
 
@@ -680,16 +680,17 @@ Taketori.prototype = {
 							e = e || event;
 							if (taketori.supportTouch && e.touches) {
 								var clicked = (element.taketori.dblClickTimer) ? true : false;
+								var is_not_tap = (e.touches.length > 1) ? true : false;
 								e = e.touches[0];
 								if (clicked) {
 									clearTimeout(element.taketori.dblClickTimer);
 									delete element.taketori.dblClickTimer;
-									if (Math.abs(element.taketori.touchX - e.pageX) > 50 || Math.abs(element.taketori.touchY - e.pageY) > 50) clicked = false;
+									if (is_not_tap || Math.abs(element.taketori.touchX - e.pageX) > 50 || Math.abs(element.taketori.touchY - e.pageY) > 50) clicked = false;
 								}
 								element.taketori.touchX = e.pageX;
 								element.taketori.touchY = e.pageY;
 								if (!clicked) {
-									element.taketori.dblClickTimer = setTimeout(function () {
+									if (!is_not_tap) element.taketori.dblClickTimer = setTimeout(function () {
 										if (element.taketori.dblClickTimer) delete element.taketori.dblClickTimer;
 										if (element.taketori.touchX) delete element.taketori.touchX;
 										if (element.taketori.touchY) delete element.taketori.touchY;
