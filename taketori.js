@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.4.2
+ * Version: 1.4.3
  * Lisence: MIT Lisence
- * Last-Modified: 2015-08-10
+ * Last-Modified: 2015-11-01
  */
 
 
@@ -1028,13 +1028,15 @@ Taketori.prototype = {
 		if (this.isWritingModeReady) {
 			var h = this.getTotalHeight(element);
 			element.style.height = h + 'px';
-			element.style.overflow = 'visible';
+			element.style.overflow = 'auto';
 			this.fixMargin(element,this.process.config.width,h);
+			setTimeout( function () { element.style.height = element.scrollHeight + 'px'; element.style.overflow = 'visible'; }, 120);
 		} else {
 			var w = this.getTotalWidth(element);
 			element.style.width = w + 'px';
-			element.style.overflow = 'visible';
+			element.style.overflow = 'auto';
 			this.fixMargin(element,w,this.process.config.width);
+			setTimeout( function () { element.style.width = element.scrollWidth + 'px'; element.style.overflow = 'visible'; }, 120);
 		}
 	},
 
@@ -1075,7 +1077,7 @@ Taketori.prototype = {
 			if (!configReady) taketori.setCurrentConfig(element);
 			taketori.makeClipboard(element);
 			taketori.parse(element,true);
-			taketori.complement(element);
+			taketori.complement();
 			taketori.removeClipboard();
 			taketori.document.element(element).removeClassName('taketori-in-progress');
 		},120);
@@ -1511,7 +1513,7 @@ Taketori.prototype = {
 		return w;
 	},
 
-	complement : function (element) {
+	complement : function () {
 		this.appendHTML('',true);
 	},
 
