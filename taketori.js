@@ -1,9 +1,9 @@
 /* Taketori - Make Text Vertical 
  * Copyright 2010-2015 CMONOS Co. Ltd. (http://cmonos.jp)
  *
- * Version: 1.4.3
+ * Version: 1.4.4
  * Lisence: MIT Lisence
- * Last-Modified: 2015-11-01
+ * Last-Modified: 2015-11-08
  */
 
 
@@ -181,15 +181,15 @@ Taketori.prototype = {
 	document : (new TaketoriTool()),
 
 	importCSS : function() {
-		var cssImported = false;
-		var viewerCssImported = false;
+		if (this.cssImported) return true;
+		this.cssImported = false;
 		var links = document.getElementsByTagName('link');
 		for (var i=0; i<links.length; i++) {
 			if (links[i].href != null && links[i].href.search(/taketori\.css$/) != -1) {
-				cssImported = true;
+				this.cssImported = true;
 			}
 		}
-		if (cssImported) return true;
+		if (this.cssImported) return true;
 		if (this.config.cssPath == null || this.config.cssPath == 'auto') {
 			var scripts = document.getElementsByTagName('script');
 			for (var i=0; i<scripts.length; i++) {
@@ -210,6 +210,7 @@ Taketori.prototype = {
 		} else {
 			document.write('<link rel="stylesheet" type="text/css" href="' + this.config.cssPath + 'taketori.css" />');
 		}
+		this.cssImported = true;
 	},
 
 	setTemporaryCSS : function(cssText) {
@@ -606,9 +607,12 @@ Taketori.prototype = {
 		if (this.isLegacy) return this;
 		var taketori = this;
 		if (wait == null || wait) {
-			this.setOnLoad(function () { taketori.toVertical(false) });
-		} else {
 			this.importCSS();
+			this.setOnLoad(function () { taketori.toVertical(false,currentConfig) });
+		} else if (!this.cssImported) {
+			this.importCSS();
+			setTimeout(function () { taketori.toVertical(false,currentConfig) },120);
+		} else {
 			var setDblClickEvent = false;
 			var setOnly = false;
 			if (!this.targetElements) {
@@ -626,7 +630,6 @@ Taketori.prototype = {
 							this.targetElements[this.targetElements.length] = targets[i];
 						}
 					}
-
 				}
 			}
 			var event_handler = (this.supportTouch) ? 'touchstart' : 'dblclick';
