@@ -6,26 +6,26 @@ What's this ?
 
 "taketori.js" is a javascript library to make text vertical.
 
-###Browser Support
+### Browser Support
 InternetExplorer5.5+ / Firefox3.5+ / Safari3.2+ / Chrome3.0+ / Opera10.5+
 
-###Language
+### Language
 Chinese, Japanese, Korean
 
-###License
+### License
 MIT License
 
 How To Use
 ---------------
 
-###Preparation
+### Preparation
 
 Upload these two files same directory.
 
 * taketori.js
 * taketori.css
 
-###Sample
+### Sample
 
 	<script type="text/javascript" src="taketori.js" charset="UTF-8"></script>
 	<script type="text/javascript">
@@ -34,7 +34,7 @@ Upload these two files same directory.
 	//]]>
 	</script>
 
-###Parameters
+### Parameters
 
 lang
 
@@ -64,20 +64,20 @@ togglable(true|false)
 
 cacheDisabled(true|false)
 
-####Tips
+#### Tips
 
 You can set these parameters as class name.
 
 > class="taketori-maxHeight-30em taketori-fontFamily-sans-serif"
 
-###How to set target elements.
+### How to set target elements.
 
 * 'element ID'
 * 'tagName.className'
 * '=auto'
 * '=dblclick'
 
-###Button Sample
+### Button Sample
 
 	<div class="tategaki">
 	縦書き　直排
